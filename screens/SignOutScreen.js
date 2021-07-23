@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Button, List, StyleSheet, Text, TextInput, TouchableHighlight, View } from "react-native";
 import * as firebase from "firebase";
 
-export default function ProfileScreen ({ navigation }) {
+export default function SignoutScreen ({ navigation }) {
   const handleLogout = () => {
     firebase.auth().signOut();
     console.log("User "+firebase.auth().currentUser.uid+" logged out");
@@ -15,24 +15,8 @@ export default function ProfileScreen ({ navigation }) {
     <TouchableHighlight style={styles.spacedinput}>
     <Button
       style={styles.spacedinput}
-      title="Restaurant name"
-      onPress={() => navigation.navigate('Restaurant name')}
-      />
-    </TouchableHighlight>
-
-    <TouchableHighlight style={styles.spacedinput}>
-    <Button
-      style={styles.spacedinput}
-      title="Restaurant phone"
-      onPress={() => navigation.navigate('Restaurant phone')}
-    />
-    </TouchableHighlight>
-
-    <TouchableHighlight style={styles.spacedinput}>
-    <Button
-      style={styles.spacedinput}
-      title="Restaurant description"
-      onPress={() => navigation.navigate('Restaurant description')}
+      title="Sign out"
+      onPress={handleLogout}
     />
     </TouchableHighlight>
 

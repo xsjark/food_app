@@ -12,6 +12,11 @@ import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import OrdersScreen from "./screens/OrdersScreen";
+import RestaurantNameScreen from "./screens/RestaurantNameScreen";
+import RestaurantPhoneScreen from "./screens/RestaurantPhoneScreen";
+import RestaurantDescriptionScreen from "./screens/RestaurantDescriptionScreen";
+import RestaurantImageScreen from "./screens/RestaurantImageScreen";
+import SignOutScreen from "./screens/SignOutScreen";
 
 LogBox.ignoreLogs(["Setting a timer"]);
 
@@ -24,7 +29,38 @@ try {
 }
 
 const Stack = createStackNavigator();
+const RestaurantStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+const Restaurant = () => (
+  <RestaurantStack.Navigator>
+  <RestaurantStack.Screen
+    name="Profile"
+    component={ProfileScreen}
+    options={{ headerShown: false }}
+  />
+    <RestaurantStack.Screen
+      name="Restaurant name"
+      component={RestaurantNameScreen}
+      options={{ headerShown: false }}
+    />
+    <RestaurantStack.Screen
+      name="Restaurant phone"
+      component={RestaurantPhoneScreen}
+      options={{ headerShown: false }}
+    />
+    <RestaurantStack.Screen
+      name="Restaurant description"
+      component={RestaurantDescriptionScreen}
+      options={{ headerShown: false }}
+    />
+    <RestaurantStack.Screen
+      name="Restaurant image"
+      component={RestaurantImageScreen}
+      options={{ headerShown: false }}
+    />
+  </RestaurantStack.Navigator>
+)
 
 const UserStack = () => (
   <Drawer.Navigator>
@@ -34,14 +70,14 @@ const UserStack = () => (
       options={{ headerShown: true }}
     />
     <Drawer.Screen
-      name="Profile"
-      component={ProfileScreen}
-      options={{ headerShown: true }}
+      name="Restaurant"
+      component={Restaurant}
+      options={{ headerShown: false }}
     />
     <Drawer.Screen
-      name="Orders"
-      component={OrdersScreen}
-      options={{ headerShown: true }}
+      name="Sign out"
+      component={SignOutScreen}
+      options={{ headerShown: false }}
     />
   </Drawer.Navigator>
 );
@@ -51,7 +87,7 @@ const AuthStack = () => (
     <Stack.Screen
       name="Login"
       component={LoginScreen}
-      options={{ headerShown: true }}
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, Text, TextInput, TouchableHighlight, View } from "react-native";
 import * as firebase from "firebase";
 
+import RestaurantFlatList from "../components/RestaurantFlatList";
+
 export default function HomeScreen() {
   const handleLogout = () => {
     firebase.auth().signOut();
@@ -11,9 +13,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <TouchableHighlight style={styles.spacedinput}>
-      <Button title="Logout" onPress={handleLogout} />
-      </TouchableHighlight>
+      <RestaurantFlatList />
     </View>
   );
 }
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "center",
-    paddingVertical: "50%",
     alignItems: 'center',
   },
   spacedinput: {
