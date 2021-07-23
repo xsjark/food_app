@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Button, StyleSheet, Text, TextInput, TouchableHighlight, View } from "react-native";
 import * as firebase from "firebase";
 
-export default function HomeScreen() {
+export default function OrdersScreen () {
   const handleLogout = () => {
     firebase.auth().signOut();
     console.log("User "+firebase.auth().currentUser.uid+" logged out");

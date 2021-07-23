@@ -21,7 +21,6 @@ export default function LoginScreen() {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => console.log("User logged in"))
       .then(() => {
         firebase
           .firestore()
@@ -33,7 +32,7 @@ export default function LoginScreen() {
           .catch((error) => {
             console.error("Error creating user: ", error);
           });
-        console.log("User added to Firebase");
+        console.log("User "+firebase.auth().currentUser.uid+" logged in");
       })
       .catch((error) => alert(error));
   };
@@ -56,7 +55,7 @@ export default function LoginScreen() {
           .catch((error) => {
             console.error("Error creating user: ", error);
           });
-        console.log("User added to Firebase");
+        console.log("User "+firebase.auth().currentUser.uid+" created");
       })
       .catch((error) => alert(error));
   };
@@ -89,6 +88,7 @@ export default function LoginScreen() {
         value={password}
         onChangeText={(password) => setPassword(password)}
         secureTextEntry
+        autoCapitalize="none"
       />
 
       <TouchableHighlight style={styles.spacedinput}>
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     justifyContent: "center",
     paddingVertical: "50%",
+    alignItems: 'center'
   },
   spacedinput: {
     margin: 5,
