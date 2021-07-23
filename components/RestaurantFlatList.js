@@ -11,7 +11,7 @@ import {
   TextInput,
 } from "react-native";
 import * as firebase from "firebase";
-import { Text, SearchBar, Divider } from "react-native-elements";
+import { Text, SearchBar, Divider, Chip } from "react-native-elements";
 
 const callWhatsapp = (restaurant, phone) => {
   Linking.openURL(
@@ -21,7 +21,7 @@ const callWhatsapp = (restaurant, phone) => {
   });
 };
 
-const Item = ({ name, phone, description }) => (
+const Item = ({ name, phone, keywords }) => (
   <View style={styles.container}>
     <Image
       source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
@@ -31,7 +31,11 @@ const Item = ({ name, phone, description }) => (
       <Text h4 style={styles.spaced}>
         {name}
       </Text>
-      <Text style={styles.spaced}>{description}</Text>
+
+      <View style={styles.hori_container}>
+        {typeof keywords !== "undefined" ? keywords.map((item) => (<Chip title={item} type="outline" titleStyle={{ fontSize: 10 }} containerStyle={{ margin: 2 }} />)) : <Text>No tags</Text> }
+      </View>
+
       <Button
         style={styles.spaced}
         title="call"
@@ -46,7 +50,7 @@ const RestaurantFlatList = () => {
     <Item
       name={item.restaurantName}
       phone={item.restaurantPhone}
-      description={item.description}
+      keywords={item.keyWords}
     />
   );
 
@@ -128,6 +132,13 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
     width: 400,
+  },
+  hori_container: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginHorizontal: 5,
+    marginBottom: 10
   },
   item: {
     backgroundColor: "#f9c2ff",

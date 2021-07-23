@@ -89,6 +89,7 @@ export default function RestaurantPhoneScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
+
       <View style={styles.hori_container}>
         {DATA.map((item) => (
           <Chip
