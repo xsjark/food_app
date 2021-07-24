@@ -11,7 +11,7 @@ import {
   TextInput,
 } from "react-native";
 import * as firebase from "firebase";
-import { Text, SearchBar, Divider, Chip } from "react-native-elements";
+import { Text, SearchBar, Divider, Chip, Card } from "react-native-elements";
 
 const callWhatsapp = (restaurant, phone) => {
   Linking.openURL(
@@ -23,25 +23,25 @@ const callWhatsapp = (restaurant, phone) => {
 
 const Item = ({ name, phone, keywords }) => (
   <View style={styles.container}>
-    <Image
-      source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
-      style={{ width: 100, height: 100 }}
-    />
+  <Card>
     <View style={styles.vert_container}>
       <Text h4 style={styles.spaced}>
         {name}
       </Text>
+      <Card.Divider/>
 
       <View style={styles.hori_container}>
-        {typeof keywords !== "undefined" ? keywords.map((item) => (<Chip title={item} type="outline" titleStyle={{ fontSize: 10 }} containerStyle={{ margin: 2 }} />)) : <Text>No tags</Text> }
+        {typeof keywords !== "undefined" ?
+        keywords.map((item, index) => (<Chip title={item} key={index} type="outline" titleStyle={{ fontSize: 10 }} containerStyle={{ margin: 2 }} />))
+        : <Text>No tags</Text> }
       </View>
-
       <Button
         style={styles.spaced}
         title="call"
         onPress={() => callWhatsapp(name, phone)}
       />
     </View>
+    </Card>
   </View>
 );
 
@@ -66,11 +66,16 @@ const RestaurantFlatList = () => {
       // Update FilteredDataSource
       const newData = restaurants.filter(function (item) {
         const itemData = item.restaurantName
-          ? item.restaurantName.toUpperCase()
+          ? (item.restaurantName.toUpperCase(), item.keyWords.toString().toUpperCase())
           : "".toUpperCase();
         const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
+
+        const itemDataName = itemData.indexOf(textData) > -1
+
+
+        return itemDataName ;
       });
+
       setFilteredDataSource(newData);
       setSearch(text);
     } else {
@@ -81,6 +86,9 @@ const RestaurantFlatList = () => {
     }
   };
 
+  useEffect(() => {
+    searchFilterFunction("")
+}, [])
   useEffect(() => {
     firebase
       .firestore()
@@ -113,7 +121,10 @@ const RestaurantFlatList = () => {
       />
       <View style={styles.container}>
         <FlatList
-          data={filteredDataSource.length === 0 ? restaurants : filteredDataSource}
+          data={filteredDataSource.length === 0 && search.length === 0 ? restaurants
+            : filteredDataSource.length === 0 && search.length > 0 ? new Array()
+            : filteredDataSource
+          }
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
@@ -127,29 +138,29 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     margin: 10,
+    justifyContent: "center",
+    alignItems: "center"
+
   },
   vert_container: {
     flex: 1,
-    marginHorizontal: 10,
-    width: 400,
+    width: "100%"
   },
   hori_container: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    marginHorizontal: 5,
-    marginBottom: 10
+    marginBottom: 10,
+    width: 300
+
   },
   item: {
     backgroundColor: "#f9c2ff",
   },
   spaced: {
     marginBottom: 10,
-    marginHorizontal: 10,
-    width: 240,
   },
   spacedinput: {
-    marginHorizontal: 20,
     fontSize: 20,
     marginTop: 5,
   },
