@@ -9,9 +9,17 @@ import {
   Linking,
   Button,
   TextInput,
+  RefreshControl
 } from "react-native";
 import * as firebase from "firebase";
-import { Text, SearchBar, Divider, Chip, Card } from "react-native-elements";
+import {
+  Text,
+  SearchBar,
+  Divider,
+  Chip,
+  Card,
+  Icon,
+} from "react-native-elements";
 
 const callWhatsapp = (restaurant, phone) => {
   Linking.openURL(
@@ -23,27 +31,43 @@ const callWhatsapp = (restaurant, phone) => {
 
 const Item = ({ name, phone, keywords }) => (
   <View style={styles.container}>
-  <Card>
-    <View style={styles.vert_container}>
-      <Text h4 style={styles.spaced}>
-        {name}
-      </Text>
-      <Card.Divider/>
+    <Card>
+      <View style={styles.vert_container}>
+        <Text h4 style={styles.spaced}>
+          {name}
+        </Text>
+        <Card.Divider />
 
-      <View style={styles.hori_container}>
-        {typeof keywords !== "undefined" ?
-        keywords.map((item, index) => (<Chip title={item} key={index} type="outline" titleStyle={{ fontSize: 10 }} containerStyle={{ margin: 2 }} />))
-        : <Text>No tags</Text> }
+        <View style={styles.hori_container}>
+          {typeof keywords !== "undefined" ? (
+            keywords
+              .filter((item) => item !== name)
+              .map((item, index) => (
+                <Chip
+                  title={item}
+                  key={index}
+                  type="outline"
+                  titleStyle={{ fontSize: 10 }}
+                  containerStyle={{ margin: 2 }}
+                />
+              ))
+          ) : (
+            <Text>No tags</Text>
+          )}
+        </View>
+        <Button
+          style={styles.spaced}
+          title="call"
+          onPress={() => callWhatsapp(name, phone)}
+        />
       </View>
-      <Button
-        style={styles.spaced}
-        title="call"
-        onPress={() => callWhatsapp(name, phone)}
-      />
-    </View>
     </Card>
   </View>
 );
+
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
 const RestaurantFlatList = () => {
   const renderItem = ({ item }) => (
@@ -57,6 +81,8 @@ const RestaurantFlatList = () => {
   const [restaurants, setRestaurants] = useState([]);
   const [search, setSearch] = useState(" ");
   const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
+
 
   const searchFilterFunction = (text) => {
     // Check if searched text is not blank
@@ -66,14 +92,13 @@ const RestaurantFlatList = () => {
       // Update FilteredDataSource
       const newData = restaurants.filter(function (item) {
         const itemData = item.restaurantName
-          ? (item.restaurantName.toUpperCase(), item.keyWords.toString().toUpperCase())
+          ? item.keyWords.toString().toUpperCase()
           : "".toUpperCase();
         const textData = text.toUpperCase();
 
-        const itemDataName = itemData.indexOf(textData) > -1
+        const itemDataName = itemData.indexOf(textData) > -1;
 
-
-        return itemDataName ;
+        return itemDataName;
       });
 
       setFilteredDataSource(newData);
@@ -87,8 +112,9 @@ const RestaurantFlatList = () => {
   };
 
   useEffect(() => {
-    searchFilterFunction("")
-}, [])
+    searchFilterFunction("");
+  }, []);
+
   useEffect(() => {
     firebase
       .firestore()
@@ -104,7 +130,29 @@ const RestaurantFlatList = () => {
         },
         (error) => alert(error)
       );
-  },[]);
+  }, []);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    firebase
+      .firestore()
+      .collection("restaurants")
+      .orderBy("restaurantName")
+      .onSnapshot(
+        (snapshot) => {
+          const restaurants = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setRestaurants(restaurants);
+        },
+        (error) => alert(error)
+      );
+    wait(2000)
+    .then(() => setRefreshing(false));
+  }, []);
+
+
 
   return (
     <View style={styles.vert_container}>
@@ -121,12 +169,21 @@ const RestaurantFlatList = () => {
       />
       <View style={styles.container}>
         <FlatList
-          data={filteredDataSource.length === 0 && search.length === 0 ? restaurants
-            : filteredDataSource.length === 0 && search.length > 0 ? new Array()
-            : filteredDataSource
+          data={
+            filteredDataSource.length === 0 && search.length === 0
+              ? restaurants
+              : filteredDataSource.length === 0 && search.length > 0
+              ? new Array()
+              : filteredDataSource
           }
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
         />
       </View>
     </View>
@@ -139,20 +196,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 10,
     justifyContent: "center",
-    alignItems: "center"
-
+    alignItems: "center",
   },
   vert_container: {
     flex: 1,
-    width: "100%"
+    width: "100%",
   },
   hori_container: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     marginBottom: 10,
-    width: 300
-
+    width: 300,
   },
   item: {
     backgroundColor: "#f9c2ff",

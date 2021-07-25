@@ -58,16 +58,21 @@ const DATA = [
 export default function RestaurantPhoneScreen({ navigation }) {
   const current_id = firebase.auth().currentUser.uid;
   const [keyWords, setKeyWords] = useState([]);
+  const [restaurant, setRestaurant] = useState([]);
 
   const handleChipPress = (chip) => {
-    setKeyWords((oldArray) => [...keyWords, chip]);
+    setKeyWords((oldArray) => [...keyWords, chip, restaurant.restaurantName]);
     if (keyWords.includes(chip)) {
       setKeyWords((keyWords) => keyWords.filter((keyWord) => keyWord !== chip));
+    }
+    if (keyWords.includes(restaurant.restaurantName)) {
+      setKeyWords((keyWords) => keyWords.filter((keyWord) => keyWord !== restaurant.restaurantName));
     }
   };
 
   const updateRestaurantKeyWords = async () => {
     if (keyWords.length > 0) {
+
       firebase
         .firestore()
         .collection("restaurants")
@@ -75,7 +80,6 @@ export default function RestaurantPhoneScreen({ navigation }) {
         .update({
           keyWords: keyWords,
         })
-        .then(() => navigation.navigate("Profile"))
         .catch((error) => {
           alert("Error creating restaurant keywords: ", error);
         });
@@ -87,9 +91,15 @@ export default function RestaurantPhoneScreen({ navigation }) {
     }
   };
 
+  useEffect(() => {
+    firebase.firestore().collection("restaurants").doc(current_id).get()
+        .then(snapshot => setRestaurant(snapshot.data()))
+  }, [])
+
+
+
   return (
     <KeyboardAvoidingView style={styles.container}>
-
       <View style={styles.hori_container}>
         {DATA.map((item) => (
           <Chip
