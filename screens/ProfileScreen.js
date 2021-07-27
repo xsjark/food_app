@@ -42,7 +42,7 @@ export default function ProfileScreen({ navigation }) {
   const [workDays, setWorkDays] = useState([]);
 
   const updateRestaurantName = async () => {
-    if (newRestaurantName.length > 0 && restaurant.keyWords.length > 0) {
+    if (newRestaurantName.length > 0 ) {
       firebase
         .firestore()
         .collection("restaurants")
@@ -56,9 +56,11 @@ export default function ProfileScreen({ navigation }) {
             .collection("restaurants")
             .doc(firebase.auth().currentUser.uid)
             .update({
-              keyWords: restaurant.keyWords
-                .concat(newRestaurantName)
-                .filter((item) => item !== restaurant.restaurantName),
+              keyWords:
+                restaurant.keyWords ? restaurant.keyWords
+                  .concat(newRestaurantName)
+                  .filter((item) => item !== restaurant.restaurantName)
+                : newRestaurantName
             })
         )
         .catch((error) => {
@@ -183,7 +185,7 @@ export default function ProfileScreen({ navigation }) {
   }
 
   useEffect(() => {
-    if (restaurant){
+    if (restaurant.days){
       setMondayChecked(restaurant.days[0])
       setTuesdayChecked(restaurant.days[1])
       setWednesdayChecked(restaurant.days[2])
@@ -191,6 +193,8 @@ export default function ProfileScreen({ navigation }) {
       setFridayChecked(restaurant.days[4])
       setThursdayChecked(restaurant.days[5])
       setFridayChecked(restaurant.days[6])
+    } else {
+      null
     }
   })
 

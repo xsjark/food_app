@@ -62,7 +62,7 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
         </Card.Title >
 
         <View style={styles.hori_container}>
-          {typeof keywords !== "undefined" ? (
+          { keywords !== null  ? (
             keywords
               .filter((item) => item !== name)
               .map((item, index) => (
@@ -114,7 +114,7 @@ const RestaurantFlatList = () => {
       id={item.id}
       openTime={item.openTime ? item. openTime : "00:00"}
       closeTime={item.closeTime ? item.closeTime : "00:00"}
-      days={item.days ? item.days : null}
+      days={item.days ? item.days : []}
       timeNow={new Date().toTimeString().split(' ')[0]}
       dayNow={new Date().getDay()}
     />
