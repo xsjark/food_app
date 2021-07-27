@@ -7,7 +7,6 @@ import {
   StyleSheet,
   StatusBar,
   Linking,
-  Button,
   TextInput,
   RefreshControl
 } from "react-native";
@@ -19,6 +18,7 @@ import {
   Chip,
   Card,
   Icon,
+  Button,
 } from "react-native-elements";
 
 const callWhatsapp = (restaurant, phone) => {
@@ -52,11 +52,21 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
 
   return (
     <View style={styles.container}>
-    <Card>
-      <View>
-      <View style={styles.hori_titlecontainer}>
+    <Card containerStyle={{borderRadius: 5, backgroundColor: "#FAFAFA", height: "90%"}}>
+    {(() => {
+      switch (id) {
+        case "4AVB9jrKDjW8V5h4lZVxlf9FWgz2":  return <Card.Image source={require('../assets/4AVB9jrKDjW8V5h4lZVxlf9FWgz2.jpg')} containerStyle={{borderRadius:2}}/>
+        case "Gv83m6u1igPxmZeMoKBD5bbQlyJ2":  return <Card.Image source={require('../assets/Gv83m6u1igPxmZeMoKBD5bbQlyJ2.jpg')} containerStyle={{borderRadius:2}}/>
+        case "XoyFOQUFmbUW3N74fPkCGsYeU7f1":  return <Card.Image source={require('../assets/XoyFOQUFmbUW3N74fPkCGsYeU7f1.jpg')} containerStyle={{borderRadius:2}}/>
+        case "uUP1LiIJ9PejEVPeT8oFCliXymq2":  return <Card.Image source={require('../assets/uUP1LiIJ9PejEVPeT8oFCliXymq2.jpg')} containerStyle={{borderRadius:2}}/>
+        case "zASlLbuGLnYfM49XE1AxIWtTDPu2":  return <Card.Image source={require('../assets/zASlLbuGLnYfM49XE1AxIWtTDPu2.jpg')} containerStyle={{borderRadius:2}}/>
+        default: return <Card.Image source={require('../assets/4AVB9jrKDjW8V5h4lZVxlf9FWgz2.jpg')} />;
+      }
+    })()}
       <View>
 
+      <View style={styles.hori_titlecontainer}>
+      <View>
         <Card.Title style={styles.spacedleft}>
           {name}
         </Card.Title >
@@ -86,16 +96,16 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
           size={15}
           raised
           containerStyle={styles.spaced}
-          color={isOpen ? "green" : "gray"}
+          color={isOpen ? "#8BC34A" : "gray"}
           reverse
         />
-        </View>
-        <Card.Divider />
         <Button
-          style={styles.spaced}
+          containerStyle={{width:"90%", marginTop: 20, marginHorizontal: "5%", marginBottom: 20}}
           title="call"
           onPress={() => callWhatsapp(name, phone)}
         />
+        </View>
+
       </View>
     </Card>
   </View>
@@ -236,34 +246,42 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    margin: 10,
+    marginHorizontal: 10,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom:5
   },
   hori_container: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    marginBottom: 10,
-    width: 250,
+    marginHorizontal: 10,
+    width: 200,
   },
   hori_titlecontainer: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    width: 300,
     justifyContent: "space-between",
+    top: -30,
+    backgroundColor: "white",
+    width: 300,
+    marginHorizontal: 10,
+    borderRadius: 5
   },
   item: {
     backgroundColor: "#f9c2ff",
   },
   spaced: {
     justifyContent:"center",
+    marginRight: 10,
+    marginTop: 10,
   },
   spacedleft: {
     justifyContent:"flex-start",
     textAlign: "left",
-    marginLeft: 10
+    marginLeft: 10,
+    marginTop: 15,
   },
   spacedinput: {
     fontSize: 20,

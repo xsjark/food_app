@@ -210,7 +210,6 @@ export default function ProfileScreen({ navigation }) {
           <Card.Divider />
           <Input
             placeholder={restaurant.restaurantName}
-            leftIcon={{ type: "entypo", name: "shop" }}
             value={newRestaurantName}
             onChangeText={(newRestaurantName) =>
               setNewRestaurantName(newRestaurantName)
@@ -234,7 +233,6 @@ export default function ProfileScreen({ navigation }) {
           <Card.Divider />
           <Input
             placeholder={restaurant.restaurantPhone}
-            leftIcon={{ type: "entypo", name: "old-phone" }}
             value={newRestaurantPhone}
             onChangeText={(newRestaurantPhone) =>
               setNewRestaurantPhone(newRestaurantPhone)
@@ -395,7 +393,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "center",
-    paddingVertical: 50,
+    paddingVertical: 20,
     alignItems: "center",
   },
   buttoncontainer: {
@@ -404,7 +402,7 @@ const styles = StyleSheet.create({
   },
   spaced: {
     marginBottom: 10,
-    width: 300,
+    width: 350,
   },
   spacedinput: {
     marginHorizontal: 40,
