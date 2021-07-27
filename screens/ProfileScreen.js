@@ -12,14 +12,16 @@ import {
   ScrollView,
 } from "react-native";
 import * as firebase from "firebase";
-import { Input, Card, Chip } from "react-native-elements";
+import { Input, Card, Chip, CheckBox } from "react-native-elements";
 
 const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 const newRestaurantNameInput = React.createRef();
 const newRestaurantPhoneInput = React.createRef();
+const newOpenTimeInput = React.createRef();
+const newCloseTimeInput = React.createRef();
 
 export default function ProfileScreen({ navigation }) {
   const current_id = firebase.auth().currentUser.uid;
@@ -27,8 +29,17 @@ export default function ProfileScreen({ navigation }) {
   const [newRestaurantName, setNewRestaurantName] = useState("");
   const [newRestaurantPhone, setNewRestaurantPhone] = useState("");
   const [newRestaurantKeyWords, setNewRestaurantKeyWords] = useState([]);
+  const [newOpenTime, setNewOpenTime] = useState("");
+  const [newCloseTime, setNewCloseTime] = useState("");
   const [refreshing, setRefreshing] = React.useState(false);
-
+  const [mondayChecked, setMondayChecked] = useState(false);
+  const [tuesdayChecked, setTuesdayChecked] = useState(false);
+  const [wednesdayChecked, setWednesdayChecked] = useState(false);
+  const [thursdayChecked, setThursdayChecked] = useState(false);
+  const [fridayChecked, setFridayChecked] = useState(false);
+  const [saturdayChecked, setSaturdayChecked] = useState(false);
+  const [sundayChecked, setSundayChecked] = useState(false);
+  const [workDays, setWorkDays] = useState([]);
 
   const updateRestaurantName = async () => {
     if (newRestaurantName.length > 0 && restaurant.keyWords.length > 0) {
@@ -40,14 +51,16 @@ export default function ProfileScreen({ navigation }) {
           restaurantName: newRestaurantName,
         })
         .then(() =>
-        firebase
-          .firestore()
-          .collection("restaurants")
-          .doc(firebase.auth().currentUser.uid)
-          .update({
-            keyWords: restaurant.keyWords.concat(newRestaurantName).filter((item) => item !== restaurant.restaurantName),
-          })
-      )
+          firebase
+            .firestore()
+            .collection("restaurants")
+            .doc(firebase.auth().currentUser.uid)
+            .update({
+              keyWords: restaurant.keyWords
+                .concat(newRestaurantName)
+                .filter((item) => item !== restaurant.restaurantName),
+            })
+        )
         .catch((error) => {
           alert("Error updating restaurant name: ", error);
         });
@@ -58,7 +71,7 @@ export default function ProfileScreen({ navigation }) {
   };
 
   const updateRestaurantPhone = async () => {
-    if (newRestaurantPhone.length > 0 ) {
+    if (newRestaurantPhone.length > 0) {
       firebase
         .firestore()
         .collection("restaurants")
@@ -75,6 +88,25 @@ export default function ProfileScreen({ navigation }) {
     }
   };
 
+  const updateOpenTime = async () => {
+    if (newOpenTime.length !== 0 && newCloseTime.length !== 0) {
+      firebase
+        .firestore()
+        .collection("restaurants")
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          openTime: newOpenTime,
+          closeTime: newCloseTime,
+        })
+        .catch((error) => {
+          alert("Error updating restaurant hours: ", error);
+        });
+      alert("Restaurant hours" + firebase.auth().currentUser.uid + " updated");
+    } else {
+      alert("Enter your restaurant's new hours");
+    }
+  };
+
   useEffect(() => {
     firebase
       .firestore()
@@ -82,12 +114,13 @@ export default function ProfileScreen({ navigation }) {
       .doc(current_id)
       .get()
       .then((snapshot) => setRestaurant(snapshot.data()));
-  },[]);
+  }, []);
 
   const handleLogout = () => {
     firebase.auth().signOut();
     console.log("User " + firebase.auth().currentUser.uid + " logged out");
   };
+
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     firebase
@@ -96,107 +129,246 @@ export default function ProfileScreen({ navigation }) {
       .doc(current_id)
       .get()
       .then((snapshot) => setRestaurant(snapshot.data()));
-      newRestaurantNameInput.current.clear();
-      newRestaurantPhoneInput.current.clear();
-    wait(2000)
-    .then(() => setRefreshing(false));
+    newRestaurantNameInput.current.clear();
+    newRestaurantPhoneInput.current.clear();
+    newOpenTimeInput.current.clear();
+    newCloseTimeInput.current.clear();
+    wait(2000).then(() => setRefreshing(false));
   }, []);
 
+  const handleOnChange = (day) => {
+    switch (day) {
+      case "Monday":
+        setMondayChecked(!mondayChecked);
+        break;
+      case "Tuesday":
+        setTuesdayChecked(!tuesdayChecked);
+        break;
+      case "Wednesday":
+        setWednesdayChecked(!wednesdayChecked);
+        break;
+      case "Thursday":
+        setThursdayChecked(!thursdayChecked);
+        break;
+      case "Friday":
+        setFridayChecked(!fridayChecked);
+        break;
+      case "Saturday":
+        setSaturdayChecked(!saturdayChecked);
+        break;
+      case "Sunday":
+        setSundayChecked(!sundayChecked);
+        break;
+    }
+  };
+
+  const updateRestaurantDays = () => {
+    firebase
+      .firestore()
+      .collection("restaurants")
+      .doc(firebase.auth().currentUser.uid)
+      .update({
+        Monday: mondayChecked,
+        Tuesday: tuesdayChecked,
+        Wednesday: wednesdayChecked,
+        Thursday: thursdayChecked,
+        Friday: fridayChecked,
+        Saturday: saturdayChecked,
+        Sunday: sundayChecked,
+      })
+      .catch((error) => {
+        alert("Error updating restaurant days: ", error);
+      });
+    alert("Restaurant days" + firebase.auth().currentUser.uid + " updated");
+  }
 
   return (
     <View style={styles.container}>
-    <ScrollView
-  refreshControl={
-    <RefreshControl
-      refreshing={refreshing}
-      onRefresh={onRefresh}
-    />
-  }
-  >
-      <Card containerStyle={styles.spaced}>
-        <Card.Title>Restaurant name</Card.Title>
-        <Card.Divider />
-        <Input
-          placeholder={restaurant.restaurantName}
-          leftIcon={{ type: "entypo", name: "shop" }}
-          value={newRestaurantName}
-          onChangeText={(newRestaurantName) => setNewRestaurantName(newRestaurantName)}
-          ref={newRestaurantNameInput}
-        />
-        <TouchableHighlight>
-          <Button
-            style={styles.spaced}
-            title="Save"
-            onPress={() => {updateRestaurantName(); newRestaurantNameInput.current.clear();}}
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <Card containerStyle={styles.spaced}>
+          <Card.Title>Restaurant name</Card.Title>
+          <Card.Divider />
+          <Input
+            placeholder={restaurant.restaurantName}
+            leftIcon={{ type: "entypo", name: "shop" }}
+            value={newRestaurantName}
+            onChangeText={(newRestaurantName) =>
+              setNewRestaurantName(newRestaurantName)
+            }
+            ref={newRestaurantNameInput}
           />
-        </TouchableHighlight>
-      </Card>
+          <TouchableHighlight>
+            <Button
+              style={styles.spaced}
+              title="Save"
+              onPress={() => {
+                updateRestaurantName();
+                newRestaurantNameInput.current.clear();
+              }}
+            />
+          </TouchableHighlight>
+        </Card>
 
-      <Card containerStyle={styles.spaced}>
-        <Card.Title>Restaurant phone</Card.Title>
-        <Card.Divider />
-        <Input
-          placeholder={restaurant.restaurantPhone}
-          leftIcon={{ type: "entypo", name: "old-phone" }}
-          value={newRestaurantPhone}
-          onChangeText={(newRestaurantPhone) => setNewRestaurantPhone(newRestaurantPhone)}
-          ref={newRestaurantPhoneInput}
-        />
-        <TouchableHighlight>
-          <Button
-            style={styles.spaced}
-            title="Save"
-            onPress={() => {updateRestaurantPhone(); newRestaurantPhoneInput.current.clear();}}
+        <Card containerStyle={styles.spaced}>
+          <Card.Title>Restaurant phone</Card.Title>
+          <Card.Divider />
+          <Input
+            placeholder={restaurant.restaurantPhone}
+            leftIcon={{ type: "entypo", name: "old-phone" }}
+            value={newRestaurantPhone}
+            onChangeText={(newRestaurantPhone) =>
+              setNewRestaurantPhone(newRestaurantPhone)
+            }
+            ref={newRestaurantPhoneInput}
+            keyboardType="numeric"
           />
-        </TouchableHighlight>
-      </Card>
 
-      <Card containerStyle={styles.spaced}>
-        <Card.Title>Restaurant description</Card.Title>
-        <Card.Divider />
-        <View style={styles.hori_container}>
-          {typeof restaurant.keyWords !== "undefined" ? (
-            restaurant.keyWords
-              .filter((item) => item !== restaurant.restaurantName)
-              .map((item, index) => (
-                <Chip
-                  title={item}
-                  key={index}
-                  type="outline"
-                  titleStyle={{ fontSize: 10 }}
-                  containerStyle={{ margin: 2 }}
-                />
-              ))
-          ) : (
-            <Text>No tags</Text>
-          )}
-          <Chip
-            type="solid"
-            titleStyle={{ fontSize: 10 }}
-            containerStyle={{ margin: 2 }}
-            icon={{
-              name: "pencil",
-              type: "font-awesome",
-              size: 15,
-              color: "white",
-            }}
-            onPress={() => navigation.push("Restaurant description")}
+          <TouchableHighlight>
+            <Button
+              style={styles.spaced}
+              title="Save"
+              onPress={() => {
+                updateRestaurantPhone();
+                newRestaurantPhoneInput.current.clear();
+              }}
+            />
+          </TouchableHighlight>
+        </Card>
 
+        <Card containerStyle={styles.spaced}>
+          <Card.Title>Restaurant hours</Card.Title>
+          <Card.Divider />
+
+          <Input
+            placeholder={restaurant.openTime}
+            value={newOpenTime}
+            onChangeText={(newOpenTime) => setNewOpenTime(newOpenTime)}
+            ref={newOpenTimeInput}
+            label="open (hh:mm)"
           />
+          <Input
+            placeholder={restaurant.closeTime}
+            value={newCloseTime}
+            onChangeText={(newCloseTime) => setNewCloseTime(newCloseTime)}
+            ref={newCloseTimeInput}
+            label="close (hh:mm)"
+          />
+
+          <TouchableHighlight>
+            <Button
+              style={styles.spaced}
+              title="Save"
+              onPress={() => {
+                updateOpenTime();
+                newOpenTimeInput.current.clear();
+                newCloseTimeInput.current.clear();
+              }}
+            />
+          </TouchableHighlight>
+        </Card>
+
+        <Card containerStyle={styles.spaced}>
+          <Card.Title>Restaurant days</Card.Title>
+          <Card.Divider />
+          <Text>{workDays}</Text>
+          <CheckBox
+            title="Monday"
+            checked={mondayChecked}
+            onPress={() => handleOnChange("Monday")}
+          />
+          <CheckBox
+            title="Tuesday"
+            checked={tuesdayChecked}
+            onPress={() => handleOnChange("Tuesday")}
+          />
+          <CheckBox
+            title="Wednesday"
+            checked={wednesdayChecked}
+            onPress={() => handleOnChange("Wednesday")}
+          />
+          <CheckBox
+            title="Thursday"
+            checked={thursdayChecked}
+            onPress={() => handleOnChange("Thursday")}
+          />
+          <CheckBox
+            title="Friday"
+            checked={fridayChecked}
+            onPress={() => handleOnChange("Friday")}
+          />
+          <CheckBox
+            title="Saturday"
+            checked={saturdayChecked}
+            onPress={() => handleOnChange("Saturday")}
+          />
+          <CheckBox
+            title="Sunday"
+            checked={sundayChecked}
+            onPress={() => handleOnChange("Sunday")}
+          />
+          <TouchableHighlight>
+            <Button
+              style={styles.spaced}
+              title="Save"
+              onPress={() => {
+                updateRestaurantDays();
+              }}
+            />
+          </TouchableHighlight>
+        </Card>
+
+        <Card containerStyle={styles.spaced}>
+          <Card.Title>Restaurant description</Card.Title>
+          <Card.Divider />
+          <View style={styles.hori_container}>
+            {typeof restaurant.keyWords !== "undefined" ? (
+              restaurant.keyWords
+                .filter((item) => item !== restaurant.restaurantName)
+                .map((item, index) => (
+                  <Chip
+                    title={item}
+                    key={index}
+                    type="outline"
+                    titleStyle={{ fontSize: 10 }}
+                    containerStyle={{ margin: 2 }}
+                  />
+                ))
+            ) : (
+              <Text>No tags</Text>
+            )}
+            <Chip
+              type="solid"
+              titleStyle={{ fontSize: 10 }}
+              containerStyle={{ margin: 2 }}
+              icon={{
+                name: "pencil",
+                type: "font-awesome",
+                size: 15,
+                color: "white",
+              }}
+              onPress={() => navigation.push("Restaurant description")}
+            />
+          </View>
+        </Card>
+
+        <View style={styles.buttoncontainer}>
+          <TouchableHighlight style={styles.spaced}>
+            <Button
+              style={styles.spaced}
+              title="Back"
+              onPress={() => {
+                newRestaurantNameInput.current.clear();
+                newRestaurantPhoneInput.current.clear();
+                navigation.navigate("Home");
+              }}
+            />
+          </TouchableHighlight>
         </View>
-      </Card>
-
-      <View style={styles.buttoncontainer}>
-        <TouchableHighlight style={styles.spaced}>
-          <Button
-            style={styles.spaced}
-            title="Back"
-            onPress={() => {newRestaurantNameInput.current.clear(); newRestaurantPhoneInput.current.clear(); navigation.navigate("Home")}}
-          />
-        </TouchableHighlight>
-      </View>
       </ScrollView>
-
     </View>
   );
 }

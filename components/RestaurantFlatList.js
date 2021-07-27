@@ -29,14 +29,26 @@ const callWhatsapp = (restaurant, phone) => {
   });
 };
 
-const Item = ({ name, phone, keywords }) => (
-  <View style={styles.container}>
+const Item = ({ name, phone, keywords, id }) => {
+
+  const current_id = firebase.auth().currentUser.uid;
+  const [favourites,  setFavourites] = useState([])
+  const [customer,  setCustomer] = useState([])
+
+  useEffect(() => {
+    firebase.firestore().collection("customers").doc(current_id).get()
+        .then(snapshot => setCustomer(snapshot.data()))
+  }, [])
+  return (
+    <View style={styles.container}>
     <Card>
-      <View style={styles.vert_container}>
-        <Text h4 style={styles.spaced}>
+      <View>
+      <View style={styles.hori_titlecontainer}>
+      <View>
+
+        <Card.Title style={styles.spacedleft}>
           {name}
-        </Text>
-        <Card.Divider />
+        </Card.Title >
 
         <View style={styles.hori_container}>
           {typeof keywords !== "undefined" ? (
@@ -55,6 +67,19 @@ const Item = ({ name, phone, keywords }) => (
             <Text>No tags</Text>
           )}
         </View>
+
+        </View>
+        <Icon
+          name='shop'
+          type='entypo'
+          size={15}
+          raised
+          containerStyle={styles.spaced}
+          color="#7CB342"
+          reverse
+        />
+        </View>
+        <Card.Divider />
         <Button
           style={styles.spaced}
           title="call"
@@ -63,7 +88,7 @@ const Item = ({ name, phone, keywords }) => (
       </View>
     </Card>
   </View>
-);
+)};
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -75,6 +100,7 @@ const RestaurantFlatList = () => {
       name={item.restaurantName}
       phone={item.restaurantPhone}
       keywords={item.keyWords}
+      id={item.id}
     />
   );
 
@@ -198,22 +224,30 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  vert_container: {
-    flex: 1,
-    width: "100%",
-  },
   hori_container: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     marginBottom: 10,
+    width: 250,
+  },
+  hori_titlecontainer: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
     width: 300,
+    justifyContent: "space-between",
   },
   item: {
     backgroundColor: "#f9c2ff",
   },
   spaced: {
-    marginBottom: 10,
+    justifyContent:"center",
+  },
+  spacedleft: {
+    justifyContent:"flex-start",
+    textAlign: "left",
+    marginLeft: 10
   },
   spacedinput: {
     fontSize: 20,
