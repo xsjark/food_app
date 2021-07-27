@@ -29,16 +29,27 @@ const callWhatsapp = (restaurant, phone) => {
   });
 };
 
-const Item = ({ name, phone, keywords, id }) => {
+const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, dayNow }) => {
 
   const current_id = firebase.auth().currentUser.uid;
   const [favourites,  setFavourites] = useState([])
   const [customer,  setCustomer] = useState([])
+  const [isOpen,  setIsOpen] = useState(false)
 
   useEffect(() => {
     firebase.firestore().collection("customers").doc(current_id).get()
         .then(snapshot => setCustomer(snapshot.data()))
   }, [])
+
+  useEffect (() => {
+    if (timeNow >= openTime && timeNow <= closeTime && days.[dayNow]){
+      setIsOpen(true)
+    } else {
+      setIsOpen(false)
+    }
+  })
+
+
   return (
     <View style={styles.container}>
     <Card>
@@ -75,7 +86,7 @@ const Item = ({ name, phone, keywords, id }) => {
           size={15}
           raised
           containerStyle={styles.spaced}
-          color="#7CB342"
+          color={isOpen ? "green" : "gray"}
           reverse
         />
         </View>
@@ -97,10 +108,15 @@ const wait = (timeout) => {
 const RestaurantFlatList = () => {
   const renderItem = ({ item }) => (
     <Item
-      name={item.restaurantName}
-      phone={item.restaurantPhone}
-      keywords={item.keyWords}
+      name={item.restaurantName ? item.restaurantName : null}
+      phone={item.restaurantPhone ? item.restaurantPhone : null}
+      keywords={item.keyWords ? item.keyWords: null}
       id={item.id}
+      openTime={item.openTime ? item. openTime : "00:00"}
+      closeTime={item.closeTime ? item.closeTime : "00:00"}
+      days={item.days ? item.days : null}
+      timeNow={new Date().toTimeString().split(' ')[0]}
+      dayNow={new Date().getDay()}
     />
   );
 

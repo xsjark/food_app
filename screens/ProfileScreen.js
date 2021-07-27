@@ -167,20 +167,32 @@ export default function ProfileScreen({ navigation }) {
       .firestore()
       .collection("restaurants")
       .doc(firebase.auth().currentUser.uid)
-      .update({
-        Monday: mondayChecked,
-        Tuesday: tuesdayChecked,
-        Wednesday: wednesdayChecked,
-        Thursday: thursdayChecked,
-        Friday: fridayChecked,
-        Saturday: saturdayChecked,
-        Sunday: sundayChecked,
+      .update({days: {
+        0: mondayChecked, //Monday
+        1: tuesdayChecked,
+        2: wednesdayChecked,
+        3: thursdayChecked,
+        4: fridayChecked,
+        5: saturdayChecked,
+        6: sundayChecked,}
       })
       .catch((error) => {
         alert("Error updating restaurant days: ", error);
       });
     alert("Restaurant days" + firebase.auth().currentUser.uid + " updated");
   }
+
+  useEffect(() => {
+    if (restaurant){
+      setMondayChecked(restaurant.days[0])
+      setTuesdayChecked(restaurant.days[1])
+      setWednesdayChecked(restaurant.days[2])
+      setThursdayChecked(restaurant.days[3])
+      setFridayChecked(restaurant.days[4])
+      setThursdayChecked(restaurant.days[5])
+      setFridayChecked(restaurant.days[6])
+    }
+  })
 
   return (
     <View style={styles.container}>
@@ -250,6 +262,7 @@ export default function ProfileScreen({ navigation }) {
             ref={newOpenTimeInput}
             label="open (hh:mm)"
           />
+
           <Input
             placeholder={restaurant.closeTime}
             value={newCloseTime}
