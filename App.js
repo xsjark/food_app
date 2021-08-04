@@ -37,7 +37,7 @@ const Restaurant = () => (
   <RestaurantStack.Screen
     name="Profile"
     component={ProfileScreen}
-    options={{ headerShown: true , title: "My restaurant"}}
+    options={{ headerShown: false , title: "My restaurant"}}
   />
     <RestaurantStack.Screen
       name="Restaurant name"
@@ -67,12 +67,12 @@ const UserStack = () => (
     <Drawer.Screen
       name="Home"
       component={HomeScreen}
-      options={{ headerShown: true, title: "Restaurants" }}
+      options={{ headerShown: true, title: "Home" }}
     />
     <Drawer.Screen
-      name="Restaurant"
+      name="My restaurant"
       component={Restaurant}
-      options={{ headerShown: false }}
+      options={{ headerShown: true }}
     />
     <Drawer.Screen
       name="Sign out"

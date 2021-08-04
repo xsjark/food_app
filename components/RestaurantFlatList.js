@@ -60,7 +60,7 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
         case "XoyFOQUFmbUW3N74fPkCGsYeU7f1":  return <Card.Image source={require('../assets/XoyFOQUFmbUW3N74fPkCGsYeU7f1.jpg')} containerStyle={{borderRadius:2}}/>
         case "uUP1LiIJ9PejEVPeT8oFCliXymq2":  return <Card.Image source={require('../assets/uUP1LiIJ9PejEVPeT8oFCliXymq2.jpg')} containerStyle={{borderRadius:2}}/>
         case "zASlLbuGLnYfM49XE1AxIWtTDPu2":  return <Card.Image source={require('../assets/zASlLbuGLnYfM49XE1AxIWtTDPu2.jpg')} containerStyle={{borderRadius:2}}/>
-        default: return <Card.Image source={require('../assets/4AVB9jrKDjW8V5h4lZVxlf9FWgz2.jpg')} />;
+        default: return <Card.Image source={require('../assets/4AVB9jrKDjW8V5h4lZVxlf9FWgz2.jpg')} containerStyle={{borderRadius:2}}/>;
       }
     })()}
       <View>
@@ -213,7 +213,7 @@ const RestaurantFlatList = () => {
         searchIcon={{ size: 24 }}
         onChangeText={(text) => searchFilterFunction(text)}
         onClear={(text) => searchFilterFunction("")}
-        placeholder="Type Here..."
+        placeholder="Search"
         value={search}
         lightTheme
         containerStyle={{ backgroundColor: "white" }}
