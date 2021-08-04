@@ -13,6 +13,8 @@ import {
 } from "react-native";
 import * as firebase from "firebase";
 import { Input, Card, Chip, CheckBox } from "react-native-elements";
+import RestaurantDescriptionScreen from "./RestaurantDescriptionScreen";
+
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -60,7 +62,7 @@ export default function ProfileScreen({ navigation }) {
                 restaurant.keyWords ? restaurant.keyWords
                   .concat(newRestaurantName)
                   .filter((item) => item !== restaurant.restaurantName)
-                : newRestaurantName
+                : [newRestaurantName]
             })
         )
         .catch((error) => {
@@ -196,7 +198,7 @@ export default function ProfileScreen({ navigation }) {
     } else {
       null
     }
-  })
+  },[])
 
   return (
     <View style={styles.container}>
@@ -222,7 +224,6 @@ export default function ProfileScreen({ navigation }) {
               title="Save"
               onPress={() => {
                 updateRestaurantName();
-                newRestaurantNameInput.current.clear();
               }}
             />
           </TouchableHighlight>
@@ -247,7 +248,6 @@ export default function ProfileScreen({ navigation }) {
               title="Save"
               onPress={() => {
                 updateRestaurantPhone();
-                newRestaurantPhoneInput.current.clear();
               }}
             />
           </TouchableHighlight>
@@ -279,8 +279,6 @@ export default function ProfileScreen({ navigation }) {
               title="Save"
               onPress={() => {
                 updateOpenTime();
-                newOpenTimeInput.current.clear();
-                newCloseTimeInput.current.clear();
               }}
             />
           </TouchableHighlight>
@@ -339,37 +337,8 @@ export default function ProfileScreen({ navigation }) {
         <Card containerStyle={styles.spaced}>
           <Card.Title>Restaurant description</Card.Title>
           <Card.Divider />
-          <View style={styles.hori_container}>
-            {typeof restaurant.keyWords !== "undefined" ? (
-              restaurant.keyWords
-                .filter((item) => item !== restaurant.restaurantName)
-                .map((item, index) => (
-                  <Chip
-                    title={item}
-                    key={index}
-                    type="outline"
-                    titleStyle={{ fontSize: 10 }}
-                    containerStyle={{ margin: 2 }}
-                  />
-                ))
-            ) : (
-              <Text>No tags</Text>
-            )}
-            <Chip
-              type="solid"
-              titleStyle={{ fontSize: 10 }}
-              containerStyle={{ margin: 2 }}
-              icon={{
-                name: "pencil",
-                type: "font-awesome",
-                size: 15,
-                color: "white",
-              }}
-              onPress={() => navigation.push("Restaurant description")}
-            />
-          </View>
-        </Card>
-
+              <RestaurantDescriptionScreen />
+              </Card>
         <View style={styles.buttoncontainer}>
           <TouchableHighlight style={styles.spaced}>
             <Button

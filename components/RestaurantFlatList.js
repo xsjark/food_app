@@ -42,7 +42,7 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
   }, [])
 
   useEffect (() => {
-    if (timeNow >= openTime && timeNow <= closeTime && days.[dayNow]){
+    if (timeNow >= openTime && timeNow <= closeTime && days[dayNow]){
       setIsOpen(true)
     } else {
       setIsOpen(false)
@@ -72,7 +72,7 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
         </Card.Title >
 
         <View style={styles.hori_container}>
-          { keywords !== null  ? (
+          { keywords.length > 1  ? (
             keywords
               .filter((item) => item !== name)
               .map((item, index) => (
@@ -120,7 +120,7 @@ const RestaurantFlatList = () => {
     <Item
       name={item.restaurantName ? item.restaurantName : null}
       phone={item.restaurantPhone ? item.restaurantPhone : null}
-      keywords={item.keyWords ? item.keyWords: null}
+      keywords={item.keyWords ? item.keyWords: ["no keywords"]}
       id={item.id}
       openTime={item.openTime ? item. openTime : "00:00"}
       closeTime={item.closeTime ? item.closeTime : "00:00"}
@@ -202,7 +202,7 @@ const RestaurantFlatList = () => {
       );
     wait(2000)
     .then(() => setRefreshing(false));
-  }, []);
+  },[]);
 
 
 

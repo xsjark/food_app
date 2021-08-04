@@ -78,7 +78,7 @@ export default function RestaurantPhoneScreen({ navigation }) {
         .collection("restaurants")
         .doc(firebase.auth().currentUser.uid)
         .update({
-          keyWords: keyWords,
+          keyWords: keyWords
         })
         .catch((error) => {
           alert("Error creating restaurant keywords: ", error);
@@ -89,6 +89,7 @@ export default function RestaurantPhoneScreen({ navigation }) {
     } else {
       alert("Enter your restaurant's keywords");
     }
+    
   };
 
   useEffect(() => {
@@ -115,9 +116,6 @@ export default function RestaurantPhoneScreen({ navigation }) {
       <TouchableHighlight style={styles.spacedinput}>
         <Button title="save" onPress={updateRestaurantKeyWords} />
       </TouchableHighlight>
-      <TouchableHighlight style={styles.spacedinput}>
-        <Button title="back" onPress={() => navigation.navigate("Profile")} />
-      </TouchableHighlight>
     </KeyboardAvoidingView>
   );
 }
@@ -127,17 +125,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "center",
-    paddingVertical: "70%",
     alignItems: "center",
   },
   hori_container: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
-    marginHorizontal: 50,
   },
   spacedinput: {
-    margin: 5,
+    margin: 10,
     width: 300,
   },
 });
