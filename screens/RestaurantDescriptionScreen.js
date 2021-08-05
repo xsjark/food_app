@@ -69,6 +69,23 @@ export default function RestaurantPhoneScreen({ navigation }) {
       setKeyWords((keyWords) => keyWords.filter((keyWord) => keyWord !== restaurant.restaurantName));
     }
   };
+  const handleChipPress2 = (chip) => {
+    if (!keyWords.includes(chip) && !keyWords.includes(restaurant.restaurantName)) {
+      setKeyWords((oldArray) => [...keyWords, chip, restaurant.restaurantName]);
+    }
+    if (keyWords.includes(chip) && !keyWords.includes(restaurant.restaurantName)){
+      setKeyWords((oldArray) => [...keyWords, restaurant.restaurantName]);
+    }
+    if (!keyWords.includes(chip) && keyWords.includes(restaurant.restaurantName)){
+      setKeyWords((oldArray) => [...keyWords, chip ]);
+    }
+    if (keyWords.includes(chip) && keyWords.includes(restaurant.restaurantName)) {
+      setKeyWords((keyWords) => keyWords.filter((keyWord) => keyWord !== chip));
+    }
+    else {
+      return
+    }
+  };
 
   const updateRestaurantKeyWords = async () => {
     if (keyWords.length > 0) {
@@ -101,6 +118,7 @@ export default function RestaurantPhoneScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
+      <Text>{JSON.stringify(keyWords)}</Text>
       <View style={styles.hori_container}>
         {DATA.map((item) => (
           <Chip
@@ -108,7 +126,8 @@ export default function RestaurantPhoneScreen({ navigation }) {
             titleStyle={{ fontSize: 10 }}
             type={keyWords.includes(item.title) ? "solid" : "outline"}
             containerStyle={{ margin: 5 }}
-            onPress={() => handleChipPress(item.title)}
+            onPress={() => handleChipPress2(item.title)}
+            key={item.title}
           />
         ))}
       </View>
