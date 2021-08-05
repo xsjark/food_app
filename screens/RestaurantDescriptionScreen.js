@@ -60,16 +60,8 @@ export default function RestaurantPhoneScreen({ navigation }) {
   const [keyWords, setKeyWords] = useState([]);
   const [restaurant, setRestaurant] = useState([]);
 
+  
   const handleChipPress = (chip) => {
-    setKeyWords((oldArray) => [...keyWords, chip, restaurant.restaurantName]);
-    if (keyWords.includes(chip)) {
-      setKeyWords((keyWords) => keyWords.filter((keyWord) => keyWord !== chip));
-    }
-    if (keyWords.includes(restaurant.restaurantName)) {
-      setKeyWords((keyWords) => keyWords.filter((keyWord) => keyWord !== restaurant.restaurantName));
-    }
-  };
-  const handleChipPress2 = (chip) => {
     if (!keyWords.includes(chip) && !keyWords.includes(restaurant.restaurantName)) {
       setKeyWords((oldArray) => [...keyWords, chip, restaurant.restaurantName]);
     }
@@ -126,7 +118,7 @@ export default function RestaurantPhoneScreen({ navigation }) {
             titleStyle={{ fontSize: 10 }}
             type={keyWords.includes(item.title) ? "solid" : "outline"}
             containerStyle={{ margin: 5 }}
-            onPress={() => handleChipPress2(item.title)}
+            onPress={() => handleChipPress(item.title)}
             key={item.title}
           />
         ))}
