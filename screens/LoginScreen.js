@@ -14,8 +14,6 @@ import * as firebase from "firebase";
 export default function LoginScreen() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [user, setUser] = useState(null);
-  const [message, setMessage] = useState("")
 
   const handleLogin = () => {
     firebase
@@ -69,19 +67,6 @@ export default function LoginScreen() {
             console.error("Error creating user restaurant: ", error);
           });
         console.log("User restaurant "+firebase.auth().currentUser.uid+" created");
-      })
-      .then(() => {
-        firebase
-          .firestore()
-          .collection("menus")
-          .doc(firebase.auth().currentUser.uid)
-          .set({
-            email: email
-          })
-          .catch((error) => {
-            console.error("Error creating user restaurant menu: ", error);
-          });
-        console.log("User restaurant menu "+firebase.auth().currentUser.uid+" created");
       })
       .catch((error) => alert(error));
   };
