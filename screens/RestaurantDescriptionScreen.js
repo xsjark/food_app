@@ -9,6 +9,7 @@ import {
   View,
   KeyboardAvoidingView,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import * as firebase from "firebase";
 import { Text, Chip, Input } from "react-native-elements";
@@ -56,23 +57,35 @@ const DATA = [
 ];
 
 export default function RestaurantPhoneScreen({ navigation }) {
+
   const current_id = firebase.auth().currentUser.uid;
   const [keyWords, setKeyWords] = useState([]);
   const [restaurant, setRestaurant] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    firebase.firestore().collection("restaurants").doc(current_id).get()
+        .then(snapshot => {
+          setRestaurant(snapshot.data()); 
+          setIsLoading(false); 
+          setKeyWords(snapshot.data().keyWords)
+        })
+  },[])
 
   
   const handleChipPress = (chip) => {
-    if (!keyWords.includes(chip) && !keyWords.includes(restaurant.restaurantName)) {
-      setKeyWords((oldArray) => [...keyWords, chip, restaurant.restaurantName]);
+    if (restaurant.restaurantName !== null && !keyWords.includes(chip) && !keyWords.includes(restaurant.restaurantName)) {
+      setKeyWords((oldArray) => [...keyWords, chip, restaurant.restaurantName].filter(obj=>obj))
     }
-    if (keyWords.includes(chip) && !keyWords.includes(restaurant.restaurantName)){
-      setKeyWords((oldArray) => [...keyWords, restaurant.restaurantName]);
+    if (restaurant.restaurantName !== null && keyWords.includes(chip) && !keyWords.includes(restaurant.restaurantName)){
+      setKeyWords((oldArray) => [...keyWords, restaurant.restaurantName].filter(obj=>obj))
     }
-    if (!keyWords.includes(chip) && keyWords.includes(restaurant.restaurantName)){
-      setKeyWords((oldArray) => [...keyWords, chip ]);
+    if (restaurant.restaurantName !== null && !keyWords.includes(chip) && keyWords.includes(restaurant.restaurantName)){
+      setKeyWords((oldArray) => [...keyWords, chip ].filter(obj=>obj))
     }
-    if (keyWords.includes(chip) && keyWords.includes(restaurant.restaurantName)) {
-      setKeyWords((keyWords) => keyWords.filter((keyWord) => keyWord !== chip));
+    if (restaurant.restaurantName !== null && keyWords.includes(chip) && keyWords.includes(restaurant.restaurantName)) {
+      setKeyWords((keyWords) => keyWords.filter((keyWord) => keyWord !== chip).filter(obj=>obj))
     }
     else {
       return
@@ -101,17 +114,10 @@ export default function RestaurantPhoneScreen({ navigation }) {
     
   };
 
-  useEffect(() => {
-    firebase.firestore().collection("restaurants").doc(current_id).get()
-        .then(snapshot => setRestaurant(snapshot.data()))
-  }, [])
-
-
-
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <Text>{JSON.stringify(keyWords)}</Text>
-      <View style={styles.hori_container}>
+      {isLoading && <ActivityIndicator />}
+      {!isLoading && <View style={styles.hori_container}>
         {DATA.map((item) => (
           <Chip
             title={item.title}
@@ -123,10 +129,13 @@ export default function RestaurantPhoneScreen({ navigation }) {
           />
         ))}
       </View>
+      }
+      
 
       <TouchableHighlight style={styles.spacedinput}>
         <Button title="save" onPress={updateRestaurantKeyWords} />
       </TouchableHighlight>
+
     </KeyboardAvoidingView>
   );
 }

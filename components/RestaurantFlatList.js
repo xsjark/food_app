@@ -204,8 +204,6 @@ const RestaurantFlatList = () => {
     .then(() => setRefreshing(false));
   },[]);
 
-
-
   return (
     <View style={styles.vert_container}>
       <SearchBar
@@ -256,7 +254,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     marginHorizontal: 10,
-    width: 200,
+    width: 229,
   },
   hori_titlecontainer: {
     flex: 1,
@@ -280,7 +278,7 @@ const styles = StyleSheet.create({
   spacedleft: {
     justifyContent:"flex-start",
     textAlign: "left",
-    marginLeft: 10,
+    marginLeft: 15,
     marginTop: 15,
   },
   spacedinput: {

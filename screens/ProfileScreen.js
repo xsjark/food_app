@@ -117,7 +117,16 @@ export default function ProfileScreen({ navigation }) {
       .collection("restaurants")
       .doc(current_id)
       .get()
-      .then((snapshot) => setRestaurant(snapshot.data()));
+      .then((snapshot) => {
+        setRestaurant(snapshot.data())
+        setMondayChecked(snapshot.data().days[0])
+        setTuesdayChecked(snapshot.data().days[1])
+        setWednesdayChecked(snapshot.data().days[2])
+        setThursdayChecked(snapshot.data().days[3])
+        setFridayChecked(snapshot.data().days[4])
+        setSaturdayChecked(snapshot.data().days[5])
+        setSundayChecked(snapshot.data().days[6])
+      });
   }, []);
 
   const handleLogout = () => {

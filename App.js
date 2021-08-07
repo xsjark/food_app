@@ -11,11 +11,6 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import OrdersScreen from "./screens/OrdersScreen";
-import RestaurantNameScreen from "./screens/RestaurantNameScreen";
-import RestaurantPhoneScreen from "./screens/RestaurantPhoneScreen";
-import RestaurantDescriptionScreen from "./screens/RestaurantDescriptionScreen";
-import RestaurantImageScreen from "./screens/RestaurantImageScreen";
 import SignOutScreen from "./screens/SignOutScreen";
 
 LogBox.ignoreLogs(["Setting a timer"]);
@@ -39,26 +34,6 @@ const Restaurant = () => (
     component={ProfileScreen}
     options={{ headerShown: false , title: "My restaurant"}}
   />
-    <RestaurantStack.Screen
-      name="Restaurant name"
-      component={RestaurantNameScreen}
-      options={{ headerShown: false }}
-    />
-    <RestaurantStack.Screen
-      name="Restaurant phone"
-      component={RestaurantPhoneScreen}
-      options={{ headerShown: false }}
-    />
-    <RestaurantStack.Screen
-      name="Restaurant description"
-      component={RestaurantDescriptionScreen}
-      options={{ headerShown: false }}
-    />
-    <RestaurantStack.Screen
-      name="Restaurant image"
-      component={RestaurantImageScreen}
-      options={{ headerShown: false }}
-    />
   </RestaurantStack.Navigator>
 )
 
