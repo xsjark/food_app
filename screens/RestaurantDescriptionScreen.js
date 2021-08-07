@@ -114,10 +114,15 @@ export default function RestaurantPhoneScreen({ navigation }) {
     
   };
 
+  
+  
+
+
   return (
     <KeyboardAvoidingView style={styles.container}>
+      <Text>{restaurant.keyWords}</Text>
       {isLoading && <ActivityIndicator />}
-      {!isLoading && <View style={styles.hori_container}>
+      {!isLoading && typeof(keyWords) !== "undefined" && <View style={styles.hori_container}>
         {DATA.map((item) => (
           <Chip
             title={item.title}
@@ -130,7 +135,19 @@ export default function RestaurantPhoneScreen({ navigation }) {
         ))}
       </View>
       }
-      
+      {!isLoading && typeof(keyWords) == "undefined" && <View style={styles.hori_container}>
+        {DATA.map((item) => (
+          <Chip
+            title={item.title}
+            titleStyle={{ fontSize: 10 }}
+            type={"outline"}
+            containerStyle={{ margin: 5 }}
+            onPress={() => handleChipPress(item.title)}
+            key={item.title}
+          />
+        ))}
+      </View>
+      }
 
       <TouchableHighlight style={styles.spacedinput}>
         <Button title="save" onPress={updateRestaurantKeyWords} />

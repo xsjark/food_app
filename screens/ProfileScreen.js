@@ -30,7 +30,6 @@ export default function ProfileScreen({ navigation }) {
   const [restaurant, setRestaurant] = useState([]);
   const [newRestaurantName, setNewRestaurantName] = useState("");
   const [newRestaurantPhone, setNewRestaurantPhone] = useState("");
-  const [newRestaurantKeyWords, setNewRestaurantKeyWords] = useState([]);
   const [newOpenTime, setNewOpenTime] = useState("");
   const [newCloseTime, setNewCloseTime] = useState("");
   const [refreshing, setRefreshing] = React.useState(false);
@@ -346,7 +345,7 @@ export default function ProfileScreen({ navigation }) {
         <Card containerStyle={styles.spaced}>
           <Card.Title>Restaurant description</Card.Title>
           <Card.Divider />
-              <RestaurantDescriptionScreen />
+          <RestaurantDescriptionScreen />
               </Card>
         <View style={styles.buttoncontainer}>
           <TouchableHighlight style={styles.spaced}>
