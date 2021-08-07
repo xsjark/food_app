@@ -29,7 +29,7 @@ const callWhatsapp = (restaurant, phone) => {
   });
 };
 
-const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, dayNow }) => {
+const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, dayNow, image }) => {
 
   const current_id = firebase.auth().currentUser.uid;
   const [favourites,  setFavourites] = useState([])
@@ -52,17 +52,8 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
 
   return (
     <View style={styles.container}>
-    <Card containerStyle={{borderRadius: 5, backgroundColor: "#FAFAFA", height: "90%"}}>
-    {(() => {
-      switch (id) {
-        case "4AVB9jrKDjW8V5h4lZVxlf9FWgz2":  return <Card.Image source={require('../assets/4AVB9jrKDjW8V5h4lZVxlf9FWgz2.jpg')} containerStyle={{borderRadius:2}}/>
-        case "Gv83m6u1igPxmZeMoKBD5bbQlyJ2":  return <Card.Image source={require('../assets/Gv83m6u1igPxmZeMoKBD5bbQlyJ2.jpg')} containerStyle={{borderRadius:2}}/>
-        case "XoyFOQUFmbUW3N74fPkCGsYeU7f1":  return <Card.Image source={require('../assets/XoyFOQUFmbUW3N74fPkCGsYeU7f1.jpg')} containerStyle={{borderRadius:2}}/>
-        case "uUP1LiIJ9PejEVPeT8oFCliXymq2":  return <Card.Image source={require('../assets/uUP1LiIJ9PejEVPeT8oFCliXymq2.jpg')} containerStyle={{borderRadius:2}}/>
-        case "zASlLbuGLnYfM49XE1AxIWtTDPu2":  return <Card.Image source={require('../assets/zASlLbuGLnYfM49XE1AxIWtTDPu2.jpg')} containerStyle={{borderRadius:2}}/>
-        default: return <Card.Image source={require('../assets/4AVB9jrKDjW8V5h4lZVxlf9FWgz2.jpg')} containerStyle={{borderRadius:2}}/>;
-      }
-    })()}
+    <Card containerStyle={{borderRadius: 5, backgroundColor: "white", height: "95%", padding: 0}}>
+    <Card.Image source={{uri: image}} style={{ margin: 0, resizeMode: "cover", height: 300, width:340}} containerStyle={{borderRadius:5,}}/>
       <View>
 
       <View style={styles.hori_titlecontainer}>
@@ -100,10 +91,11 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
           reverse
         />
         <Button
-          containerStyle={{width:"90%", marginTop: 20, marginHorizontal: "5%", marginBottom: 20}}
+          containerStyle={{width:"90%", marginTop: 20, marginHorizontal: "5%"}}
           title="call"
           onPress={() => callWhatsapp(name, phone)}
         />
+        
         </View>
 
       </View>
@@ -127,6 +119,7 @@ const RestaurantFlatList = () => {
       days={item.days ? item.days : []}
       timeNow={new Date().toTimeString().split(' ')[0]}
       dayNow={new Date().getDay()}
+      image={item.restaurantImage ? item.restaurantImage : "https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"}
     />
   );
 
@@ -245,16 +238,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     marginHorizontal: 10,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
-    marginBottom:5
+    marginBottom:0,
   },
   hori_container: {
     flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     marginHorizontal: 10,
-    width: 229,
+    width: 269,
   },
   hori_titlecontainer: {
     flex: 1,
@@ -263,8 +256,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     top: -30,
     backgroundColor: "white",
-    width: 300,
-    marginHorizontal: 10,
+    width: 340,
+    marginHorizontal: 0,
     borderRadius: 5
   },
   item: {
