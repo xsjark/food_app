@@ -126,7 +126,7 @@ export default function ProfileScreen({ navigation }) {
         setSaturdayChecked(snapshot.data().days[5])
         setSundayChecked(snapshot.data().days[6])
       });
-  }, []);
+  }, [restaurant.restaurantName]);
 
   const handleLogout = () => {
     firebase.auth().signOut();
@@ -341,12 +341,14 @@ export default function ProfileScreen({ navigation }) {
             />
           </TouchableHighlight>
         </Card>
+        {restaurant.restaurantName && <View >
 
         <Card containerStyle={styles.spaced}>
           <Card.Title>Restaurant description</Card.Title>
           <Card.Divider />
           <RestaurantDescriptionScreen />
               </Card>
+              </View>}
         <View style={styles.buttoncontainer}>
           <TouchableHighlight style={styles.spaced}>
             <Button
