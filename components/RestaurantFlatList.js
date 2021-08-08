@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     marginHorizontal: 10,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center",
     marginBottom:0,
   },
