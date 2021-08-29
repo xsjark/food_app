@@ -2,7 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import {
   Appearance,
-  Button,
   StyleSheet,
   TextInput,
   TouchableHighlight,
@@ -12,7 +11,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import * as firebase from "firebase";
-import { Text, Chip, Input } from "react-native-elements";
+import { Button, Text, Chip, Input } from "react-native-elements";
 
 const DATA = [
   {
@@ -125,7 +124,6 @@ export default function RestaurantPhoneScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <Text>{restaurant.keyWords}</Text>
       {isLoading && <ActivityIndicator />}
       {restaurant.restaurantName && <View style={styles.hori_container}>
         {DATA.map((item) => (
@@ -140,9 +138,12 @@ export default function RestaurantPhoneScreen({ navigation }) {
         ))}
       </View>
       }
-      <TouchableHighlight style={styles.spacedinput}>
-        <Button title="save" onPress={updateRestaurantKeyWords} />
-      </TouchableHighlight>
+        <Button
+              buttonStyle={styles.button}
+              titleStyle={{  color: "black" }}
+              title="Guardar" 
+              onPress={updateRestaurantKeyWords} 
+        />
 
     </KeyboardAvoidingView>
   );
@@ -164,4 +165,12 @@ const styles = StyleSheet.create({
     margin: 10,
     width: 300,
   },
+  button: {
+    backgroundColor: "#f4d03f",
+    width:300, 
+    marginTop: 20, 
+    borderRadius: 10, 
+    alignSelf: "center",
+    color: "black"
+  }
 });

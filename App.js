@@ -13,6 +13,8 @@ import HomeScreen from "./screens/HomeScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import SignOutScreen from "./screens/SignOutScreen";
 
+import { ThemeProvider, useColorScheme } from 'react-native-elements';
+
 LogBox.ignoreLogs(["Setting a timer"]);
 
 try {
@@ -26,6 +28,9 @@ try {
 const Stack = createStackNavigator();
 const RestaurantStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+
+
+
 
 const Restaurant = () => (
   <RestaurantStack.Navigator>
@@ -81,7 +86,7 @@ export default function App() {
   });
 
   return (
-    <NavigationContainer>
+    <NavigationContainer >
       {user ? <UserStack /> : <AuthStack />}
     </NavigationContainer>
   );

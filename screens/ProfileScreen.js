@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect, createRef } from "react";
 import {
-  Button,
   List,
   StyleSheet,
   Text,
@@ -12,7 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 import * as firebase from "firebase";
-import { Input, Card, Chip, CheckBox } from "react-native-elements";
+import { Button, Input, Card, Chip, CheckBox } from "react-native-elements";
 import RestaurantDescriptionScreen from "./RestaurantDescriptionScreen";
 
 
@@ -216,7 +215,7 @@ export default function ProfileScreen({ navigation }) {
         }
       >
         <Card containerStyle={styles.spaced}>
-          <Card.Title>Restaurant name</Card.Title>
+          <Card.Title>Nombre de restaurante</Card.Title>
           <Card.Divider />
           <Input
             placeholder={restaurant.restaurantName}
@@ -226,19 +225,18 @@ export default function ProfileScreen({ navigation }) {
             }
             ref={newRestaurantNameInput}
           />
-          <TouchableHighlight>
             <Button
-              style={styles.spaced}
-              title="Save"
+              buttonStyle={styles.button}
+              titleStyle={{  color: "black" }}
+              title="Guardar"
               onPress={() => {
                 updateRestaurantName();
               }}
             />
-          </TouchableHighlight>
         </Card>
 
         <Card containerStyle={styles.spaced}>
-          <Card.Title>Restaurant phone</Card.Title>
+          <Card.Title>Número de WhatsApp</Card.Title>
           <Card.Divider />
           <Input
             placeholder={restaurant.restaurantPhone}
@@ -250,19 +248,18 @@ export default function ProfileScreen({ navigation }) {
             keyboardType="numeric"
           />
 
-          <TouchableHighlight>
             <Button
-              style={styles.spaced}
-              title="Save"
+              buttonStyle={styles.button}
+              titleStyle={{  color: "black" }}
+              title="Guardar"
               onPress={() => {
                 updateRestaurantPhone();
               }}
             />
-          </TouchableHighlight>
         </Card>
 
         <Card containerStyle={styles.spaced}>
-          <Card.Title>Restaurant hours</Card.Title>
+          <Card.Title>Horarios de atención</Card.Title>
           <Card.Divider />
 
           <Input
@@ -270,7 +267,7 @@ export default function ProfileScreen({ navigation }) {
             value={newOpenTime}
             onChangeText={(newOpenTime) => setNewOpenTime(newOpenTime)}
             ref={newOpenTimeInput}
-            label="open (hh:mm)"
+            label="Desde (hh:mm)"
           />
 
           <Input
@@ -278,90 +275,76 @@ export default function ProfileScreen({ navigation }) {
             value={newCloseTime}
             onChangeText={(newCloseTime) => setNewCloseTime(newCloseTime)}
             ref={newCloseTimeInput}
-            label="close (hh:mm)"
+            label="Hasta (hh:mm)"
           />
 
-          <TouchableHighlight>
             <Button
-              style={styles.spaced}
-              title="Save"
+              buttonStyle={styles.button}
+              titleStyle={{  color: "black" }}
+              title="Guardar"
               onPress={() => {
                 updateOpenTime();
               }}
             />
-          </TouchableHighlight>
         </Card>
 
         <Card containerStyle={styles.spaced}>
-          <Card.Title>Restaurant days</Card.Title>
+          <Card.Title>Días de atención</Card.Title>
           <Card.Divider />
           <Text>{workDays}</Text>
           <CheckBox
-            title="Monday"
+            title="Lunes"
             checked={mondayChecked}
             onPress={() => handleOnChange("Monday")}
           />
           <CheckBox
-            title="Tuesday"
+            title="Martes"
             checked={tuesdayChecked}
             onPress={() => handleOnChange("Tuesday")}
           />
           <CheckBox
-            title="Wednesday"
+            title="Miercoles"
             checked={wednesdayChecked}
             onPress={() => handleOnChange("Wednesday")}
           />
           <CheckBox
-            title="Thursday"
+            title="Jueves"
             checked={thursdayChecked}
             onPress={() => handleOnChange("Thursday")}
           />
           <CheckBox
-            title="Friday"
+            title="Viernes"
             checked={fridayChecked}
             onPress={() => handleOnChange("Friday")}
           />
           <CheckBox
-            title="Saturday"
+            title="Sabado"
             checked={saturdayChecked}
             onPress={() => handleOnChange("Saturday")}
           />
           <CheckBox
-            title="Sunday"
+            title="Domingo"
             checked={sundayChecked}
             onPress={() => handleOnChange("Sunday")}
           />
-          <TouchableHighlight>
-            <Button
-              style={styles.spaced}
-              title="Save"
+          <Button
+              buttonStyle={styles.button}
+              titleStyle={{  color: "black" }}
+              title="Guardar"
               onPress={() => {
                 updateRestaurantDays();
               }}
             />
-          </TouchableHighlight>
         </Card>
         {restaurant.restaurantName && <View >
 
         <Card containerStyle={styles.spaced}>
-          <Card.Title>Restaurant description</Card.Title>
+          <Card.Title>Palabras claves</Card.Title>
           <Card.Divider />
           <RestaurantDescriptionScreen />
               </Card>
               </View>}
-        <View style={styles.buttoncontainer}>
-          <TouchableHighlight style={styles.spaced}>
-            <Button
-              style={styles.spaced}
-              title="Back"
-              onPress={() => {
-                newRestaurantNameInput.current.clear();
-                newRestaurantPhoneInput.current.clear();
-                navigation.navigate("Home");
-              }}
-            />
-          </TouchableHighlight>
-        </View>
+      
       </ScrollView>
     </View>
   );
@@ -382,6 +365,15 @@ const styles = StyleSheet.create({
   spaced: {
     marginBottom: 10,
     width: 350,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   spacedinput: {
     marginHorizontal: 40,
@@ -391,4 +383,13 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     paddingBottom: 10,
   },
+  button: {
+    backgroundColor: "#f4d03f",
+    width:"95%", 
+    marginTop: 10, 
+    marginBottom: 10,
+    borderRadius: 10, 
+    alignSelf: "center",
+    color: "black"
+  }
 });

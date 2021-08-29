@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { Button, List, StyleSheet, Text, TextInput, TouchableHighlight, View } from "react-native";
+import {  List, StyleSheet,  TextInput, TouchableHighlight, View } from "react-native";
 import * as firebase from "firebase";
+import { Button, Text, } from "react-native-elements";
 
 export default function SignoutScreen ({ navigation }) {
   const handleLogout = () => {
@@ -14,16 +15,18 @@ export default function SignoutScreen ({ navigation }) {
 
     <TouchableHighlight style={styles.spacedinput}>
     <Button
-      style={styles.spacedinput}
-      title="Sign out"
+      buttonStyle={styles.button}
+      titleStyle={{color: "black"}}
+      title="Cerrar sesión"
       onPress={handleLogout}
     />
     </TouchableHighlight>
 
     <TouchableHighlight style={styles.spacedinput}>
     <Button
-      style={styles.spacedinput}
-      title="Back"
+      buttonStyle={styles.button}
+      titleStyle={{color: "black"}}
+      title="Atrás "
       onPress={() => navigation.navigate("Home")}
     />
     </TouchableHighlight>
@@ -44,4 +47,10 @@ const styles = StyleSheet.create({
     margin: 5,
     width: 300
   },
+  button: {
+    backgroundColor: "#f4d03f",
+    width:300, 
+    borderRadius: 10, 
+    alignSelf: "center",
+  }
 });

@@ -2,14 +2,13 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import {
   Appearance,
-  Button,
   StyleSheet,
-  Text,
   TextInput,
   TouchableHighlight,
   View,
 } from "react-native";
 import * as firebase from "firebase";
+import { Button, Text, } from "react-native-elements";
 
 export default function LoginScreen() {
   const [email, setEmail] = React.useState("");
@@ -88,14 +87,14 @@ export default function LoginScreen() {
 
       <TextInput
         style={styles.spacedinput}
-        placeholder="username"
+        placeholder="Usuario"
         value={email}
         onChangeText={(email) => setEmail(email)}
         autoCapitalize="none"
       />
       <TextInput
         style={styles.spacedinput}
-        placeholder="password"
+        placeholder="Contraseña"
         value={password}
         onChangeText={(password) => setPassword(password)}
         secureTextEntry
@@ -105,15 +104,19 @@ export default function LoginScreen() {
       <TouchableHighlight style={styles.spacedinput}>
       <Button
         style={styles.spacedinput}
-        title="Login to your account"
+        title="Iniciar sesión"
         onPress={handleLogin}
+        buttonStyle={styles.button}
+      titleStyle={{color: "black"}}
       />
       </TouchableHighlight>
-      <TouchableHighlight style={styles.spacedinput}>
-        <Button title="Register" onPress={handleSignUp} />
+      <TouchableHighlight style={styles.spacedinput} >
+        <Button title="Registrar" buttonStyle={styles.button}
+      titleStyle={{color: "black"}} onPress={handleSignUp} />
       </TouchableHighlight>
       <TouchableHighlight style={styles.spacedinput}>
-        <Button title="Reset password" onPress={passwordResetEmail} />
+        <Button title="Restablecer la contraseña" buttonStyle={styles.button}
+      titleStyle={{color: "black"}} onPress={passwordResetEmail} />
       </TouchableHighlight>
 
     </View>
@@ -132,4 +135,10 @@ const styles = StyleSheet.create({
     margin: 5,
     width: 300
   },
+  button: {
+    backgroundColor: "#f4d03f",
+    width:300, 
+    borderRadius: 10, 
+    alignSelf: "center",
+  }
 });

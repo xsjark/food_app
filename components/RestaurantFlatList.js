@@ -52,8 +52,8 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
 
   return (
     <View style={styles.container}>
-    <Card containerStyle={{borderRadius: 5, backgroundColor: "white", height: "95%", padding: 0}}>
-    <Card.Image source={{uri: image}} style={{ margin: 0, resizeMode: "cover", height: 300, width:340}} containerStyle={{borderRadius:5,}}/>
+    <Card style={{ borderStyle: "none",}} containerStyle={{ padding: 0, elevation:0,borderRadius: 10, backgroundColor: "white", height: "95%", flexDirection: "row",}}>
+    <Card.Image source={{uri: image}} style={{ margin: 0, resizeMode: "cover", height: 300, width:340}} containerStyle={{borderTopLeftRadius:10, borderTopRightRadius: 10}}/>
       <View>
 
       <View style={styles.hori_titlecontainer}>
@@ -71,8 +71,9 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
                   title={item}
                   key={index}
                   type="outline"
-                  titleStyle={{ fontSize: 10 }}
-                  containerStyle={{ margin: 2 }}
+                  titleStyle={{ fontSize: 10, color: "grey" }}
+                  containerStyle={{ margin: 2, }}
+                  buttonStyle={{borderColor: "grey"}}
                 />
               ))
           ) : (
@@ -91,9 +92,17 @@ const Item = ({ name, phone, keywords, id, openTime, closeTime, timeNow, days, d
           reverse
         />
         <Button
-          containerStyle={{width:"90%", marginTop: 20, marginHorizontal: "5%"}}
-          title="call"
+          containerStyle={{width:"90%", marginTop: 20, marginHorizontal: "5%", borderRadius: 10, }}
+          buttonStyle={{backgroundColor: "#f4d03f"}}
           onPress={() => callWhatsapp(name, phone)}
+          icon={
+            <Icon
+          name='whatsapp'
+          type='fontisto'
+          size={20}
+        />
+          }
+          raised
         />
         
         </View>
@@ -254,11 +263,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    top: -30,
+    top: -10,
     backgroundColor: "white",
     width: 340,
-    marginHorizontal: 0,
-    borderRadius: 5
+    paddingBottom: 20,
+    borderRadius: 10,
+    shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.25,
+shadowRadius: 3.84,
+
+elevation: 5,
   },
   item: {
     backgroundColor: "#f9c2ff",
