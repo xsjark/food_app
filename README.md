@@ -29,7 +29,7 @@
 Finding restaurants in Tena can be difficult. The idea was to develop a directory of restaurants in the city which users can search. Users can then contact the restaurants via WhatsApp. 
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [Expo documentation](https://docs.expo.dev/distribution/building-standalone-apps/) for notes on how to dbuild the apk.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [Expo documentation](https://docs.expo.dev/distribution/building-standalone-apps/) for notes on how to build the apk.
 
 ### Prerequisites
 
