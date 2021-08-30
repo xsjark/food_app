@@ -7,9 +7,13 @@
 <p align="center">
   <a href="" rel="noopener">
  <img width=150px src="https://raw.githubusercontent.com/xsjark/food_app/main/screenshots/Screenshot_2021-08-29-14-28-39-970_host.exp.exponent.jpg" alt="Project logo"></a>
+ <a href="" rel="noopener">
  <img width=150px src="https://raw.githubusercontent.com/xsjark/food_app/main/screenshots/Screenshot_2021-08-29-13-54-47-447_host.exp.exponent.jpg" alt="Project logo"></a>
+ <a href="" rel="noopener">
  <img width=150px src="https://raw.githubusercontent.com/xsjark/food_app/main/screenshots/Screenshot_2021-08-29-14-11-44-166_host.exp.exponent.jpg" alt="Project logo"></a>
+ <a href="" rel="noopener">
  <img width=150px src="https://raw.githubusercontent.com/xsjark/food_app/main/screenshots/Screenshot_2021-08-29-14-11-32-088_host.exp.exponent.jpg" alt="Project logo"></a>
+ <a href="" rel="noopener">
  <img width=150px src="https://raw.githubusercontent.com/xsjark/food_app/main/screenshots/Screenshot_2021-08-29-14-11-13-905_host.exp.exponent.jpg" alt="Project logo"></a>
 </p>
 
@@ -25,7 +29,7 @@
 Finding restaurants in Tena can be difficult. The idea was to develop a directory of restaurants in the city which users can search. Users can then contact the restaurants via WhatsApp. 
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [Expo documentation](https://docs.expo.dev/distribution/building-standalone-apps/) for notes on how to dbuild the apk.
 
 ### Prerequisites
 
