@@ -23,11 +23,13 @@ const newRestaurantNameInput = React.createRef();
 const newRestaurantPhoneInput = React.createRef();
 const newOpenTimeInput = React.createRef();
 const newCloseTimeInput = React.createRef();
+const newRestaurantImageInput = React.createRef();
 
 export default function ProfileScreen({ navigation }) {
   const current_id = firebase.auth().currentUser.uid;
   const [restaurant, setRestaurant] = useState([]);
   const [newRestaurantName, setNewRestaurantName] = useState("");
+  const [newRestaurantImage, setNewRestaurantImage] = useState("");
   const [newRestaurantPhone, setNewRestaurantPhone] = useState("");
   const [newOpenTime, setNewOpenTime] = useState("");
   const [newCloseTime, setNewCloseTime] = useState("");
@@ -72,6 +74,24 @@ export default function ProfileScreen({ navigation }) {
     }
   };
 
+  const updateRestaurantPImage = async () => {
+    if (newRestaurantImage.length > 0) {
+      firebase
+        .firestore()
+        .collection("restaurants")
+        .doc(firebase.auth().currentUser.uid)
+        .update({
+          restaurantImage: newRestaurantImage,
+        })
+        .catch((error) => {
+          alert("Error updating restaurant image: ", error);
+        });
+      alert("Restaurant image " + firebase.auth().currentUser.uid + " updated");
+    } else {
+      alert("Enter your restaurant's new image URL");
+    }
+  };
+    
   const updateRestaurantPhone = async () => {
     if (newRestaurantPhone.length > 0) {
       firebase
@@ -234,7 +254,27 @@ export default function ProfileScreen({ navigation }) {
               }}
             />
         </Card>
-
+        <Card containerStyle={styles.spaced}>
+          <Card.Title>Imagen</Card.Title>
+          <Card.Divider />
+          <Card.Image source={{uri: restaurant.restaurantImage}} style={{ marginBottom: 10, resizeMode: "cover", height: 300, width:340}} containerStyle={{borderTopLeftRadius:10, borderTopRightRadius: 10}}/>
+          <Input
+            placeholder={restaurant.restaurantImage}
+            value={newRestaurantImage}
+            onChangeText={(newRestaurantImage) =>
+              setNewRestaurantName(newRestaurantImage)
+            }
+            ref={newRestaurantImageInput}
+          />
+            <Button
+              buttonStyle={styles.button}
+              titleStyle={{  color: "black" }}
+              title="Guardar"
+              onPress={() => {
+                updateRestaurantImage();
+              }}
+            />
+        </Card>
         <Card containerStyle={styles.spaced}>
           <Card.Title>Número de WhatsApp</Card.Title>
           <Card.Divider />

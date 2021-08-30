@@ -1,19 +1,16 @@
-<p align="center">
-  <a href="" rel="noopener">
- <img width=200px height=200px src="https://raw.githubusercontent.com/xsjark/food_app/main/Tena%20Delivery.png" alt="Project logo"></a>
-</p>
-
 <h3 align="center">Tena Delivery App</h3>
-
+<p align="center"> An Android app for ordering food from restaurants in Tena, Ecuador.
+    <br> 
+</p>
 ---
 
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px src="https://raw.githubusercontent.com/xsjark/food_app/main/Screenshot_2021-08-07-19-33-27-990_host.exp.exponent.jpg" alt="Project logo"></a>
-</p>
-
-<p align="center"> An Android app for ordering food from restaurants in Tena, Ecuador.
-    <br> 
+ <img width=150px src="https://raw.githubusercontent.com/xsjark/food_app/main/screenshots/Screenshot_2021-08-29-14-28-39-970_host.exp.exponent.jpg" alt="Project logo"></a>
+ <img width=150px src="https://raw.githubusercontent.com/xsjark/food_app/main/screenshots/Screenshot_2021-08-29-13-54-47-447_host.exp.exponent.jpg" alt="Project logo"></a>
+ <img width=150px src="https://raw.githubusercontent.com/xsjark/food_app/main/screenshots/Screenshot_2021-08-29-14-11-44-166_host.exp.exponent.jpg" alt="Project logo"></a>
+ <img width=150px src="https://raw.githubusercontent.com/xsjark/food_app/main/screenshots/Screenshot_2021-08-29-14-11-32-088_host.exp.exponent.jpg" alt="Project logo"></a>
+ <img width=150px src="https://raw.githubusercontent.com/xsjark/food_app/main/screenshots/Screenshot_2021-08-29-14-11-13-905_host.exp.exponent.jpg" alt="Project logo"></a>
 </p>
 
 ## 📝 Table of Contents
