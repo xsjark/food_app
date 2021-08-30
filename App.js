@@ -37,7 +37,7 @@ const Restaurant = () => (
   <RestaurantStack.Screen
     name="Profile"
     component={ProfileScreen}
-    options={{ headerShown: false , title: "My restaurant"}}
+    options={{ headerShown: false , title: "Mi restaurante"}}
   />
   </RestaurantStack.Navigator>
 )
@@ -47,15 +47,15 @@ const UserStack = () => (
     <Drawer.Screen
       name="Home"
       component={HomeScreen}
-      options={{ headerShown: true, title: "Home" }}
+      options={{ headerShown: true, title: "Buscar restaurantes" }}
     />
     <Drawer.Screen
-      name="My restaurant"
+      name="Mi restaurante"
       component={Restaurant}
       options={{ headerShown: true }}
     />
     <Drawer.Screen
-      name="Sign out"
+      name="Salir"
       component={SignOutScreen}
       options={{ headerShown: false }}
     />

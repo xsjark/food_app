@@ -9,9 +9,10 @@ import {
   View,
   RefreshControl,
   ScrollView,
+  Linking,
 } from "react-native";
 import * as firebase from "firebase";
-import { Button, Input, Card, Chip, CheckBox } from "react-native-elements";
+import { Button, Icon, Input, Card, Chip, CheckBox } from "react-native-elements";
 import RestaurantDescriptionScreen from "./RestaurantDescriptionScreen";
 
 
@@ -227,8 +228,17 @@ export default function ProfileScreen({ navigation }) {
     }
   },[])
 
+  const callWhatsappMe = (restaurant, phone) => {
+    Linking.openURL(
+      "whatsapp://send?text=" + "Hola, Xsjark! " + "&phone=0962557378"
+    ).catch(() => {
+      Alert.alert("Make sure Whatsapp installed on your device");
+    });
+  };
+
   return (
     <View style={styles.container}>
+      {restaurant.subscribed && 
       <ScrollView
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -257,7 +267,7 @@ export default function ProfileScreen({ navigation }) {
         <Card containerStyle={styles.spaced}>
           <Card.Title>Imagen</Card.Title>
           <Card.Divider />
-          <Card.Image source={{uri: restaurant.restaurantImage}} style={{ marginBottom: 10, resizeMode: "cover", height: 300, width:340}} containerStyle={{borderTopLeftRadius:10, borderTopRightRadius: 10}}/>
+          <Card.Image source={{uri: restaurant.restaurantImage}} style={{ marginBottom: 10, resizeMode: "cover", height: 300, width:340}} containerStyle={{borderRadius: 10}}/>
           <Input
             placeholder={restaurant.restaurantImage}
             value={newRestaurantImage}
@@ -265,6 +275,7 @@ export default function ProfileScreen({ navigation }) {
               setNewRestaurantName(newRestaurantImage)
             }
             ref={newRestaurantImageInput}
+            multiline
           />
             <Button
               buttonStyle={styles.button}
@@ -386,6 +397,26 @@ export default function ProfileScreen({ navigation }) {
               </View>}
       
       </ScrollView>
+}
+<Card containerStyle={styles.spaced}>
+          <Card.Title>Suscríbase ya!</Card.Title>
+          <Card.Divider />
+          <Text> Póngase en contacto con nuestro departamento comercial para pedir presupuesto y consejo.</Text>
+
+          <Button
+          containerStyle={{width:"90%", marginTop: 20, marginBottom: 10, marginHorizontal: "5%", borderRadius: 10, }}
+          buttonStyle={{backgroundColor: "#f4d03f"}}
+          onPress={callWhatsappMe}
+          icon={
+            <Icon
+          name='whatsapp'
+          type='fontisto'
+          size={20}
+        />
+          }
+          raised
+        />
+        </Card>
     </View>
   );
 }

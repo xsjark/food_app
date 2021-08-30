@@ -213,7 +213,7 @@ const RestaurantFlatList = () => {
         searchIcon={{ size: 24 }}
         onChangeText={(text) => searchFilterFunction(text)}
         onClear={(text) => searchFilterFunction("")}
-        placeholder="Search"
+        placeholder="Alitas, Chifa, Mariscos, Vegetariana..."
         value={search}
         lightTheme
         containerStyle={{ backgroundColor: "white" }}
