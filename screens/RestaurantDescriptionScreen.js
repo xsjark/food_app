@@ -55,6 +55,22 @@ const DATA = [
   },
 ];
 
+const keyWordArray = [
+  "Chifa",
+  "Almuerzos",
+  "Secos",
+  "Pizza",
+  "Hamburguesas",
+  "Hot-dogs",
+  "Alitas",
+  "Costillas",
+  "Pinchos",
+  "Vegetariana",
+  "Vegana",
+  "Mariscos",
+  "Encebollado",
+];
+
 export default function RestaurantPhoneScreen({ navigation }) {
 
   const current_id = firebase.auth().currentUser.uid;
@@ -63,7 +79,6 @@ export default function RestaurantPhoneScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true);
     firebase.firestore().collection("restaurants").doc(current_id).get()
         .then(snapshot => {
           setRestaurant(snapshot.data()); 
@@ -74,16 +89,13 @@ export default function RestaurantPhoneScreen({ navigation }) {
 
   
   const handleChipPress = (chip) => {
-    if (restaurant.restaurantName !== null && !keyWords.includes(chip) && !keyWords.includes(restaurant.restaurantName)) {
-      setKeyWords((oldArray) => [...keyWords, chip, restaurant.restaurantName].filter(obj=>obj))
+    if (restaurant.restaurantName !== null && !keyWords.includes(chip)) {
+      setKeyWords((oldArray) => [...keyWords, chip].filter(obj=>obj))
     }
-    if (restaurant.restaurantName !== null && keyWords.includes(chip) && !keyWords.includes(restaurant.restaurantName)){
-      setKeyWords((oldArray) => [...keyWords, restaurant.restaurantName].filter(obj=>obj))
-    }
-    if (restaurant.restaurantName !== null && !keyWords.includes(chip) && keyWords.includes(restaurant.restaurantName)){
+    if (restaurant.restaurantName !== null){
       setKeyWords((oldArray) => [...keyWords, chip ].filter(obj=>obj))
     }
-    if (restaurant.restaurantName !== null && keyWords.includes(chip) && keyWords.includes(restaurant.restaurantName)) {
+    if (restaurant.restaurantName !== null && keyWords.includes(chip) ) {
       setKeyWords((keyWords) => keyWords.filter((keyWord) => keyWord !== chip).filter(obj=>obj))
     }
    
@@ -104,7 +116,7 @@ export default function RestaurantPhoneScreen({ navigation }) {
         .collection("restaurants")
         .doc(firebase.auth().currentUser.uid)
         .update({
-          keyWords: keyWords
+          keyWords: keyWords.filter((item) => keyWordArray.includes(item))
         })
         .catch((error) => {
           alert("Error creating restaurant keywords: ", error);
@@ -117,10 +129,6 @@ export default function RestaurantPhoneScreen({ navigation }) {
     }
     
   };
-
-  
-  
-
 
   return (
     <KeyboardAvoidingView style={styles.container}>

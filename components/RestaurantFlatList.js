@@ -121,7 +121,7 @@ const RestaurantFlatList = () => {
     <Item
       name={item.restaurantName ? item.restaurantName : null}
       phone={item.restaurantPhone ? item.restaurantPhone : null}
-      keywords={item.keyWords ? item.keyWords: ["no keywords"]}
+      keywords={item.keyWords ? item.keyWords.concat(item.restaurantName): ["no keywords"]}
       id={item.id}
       openTime={item.openTime ? item. openTime : "00:00"}
       closeTime={item.closeTime ? item.closeTime : "00:00"}
@@ -150,7 +150,7 @@ const RestaurantFlatList = () => {
           : "".toUpperCase();
         const textData = text.toUpperCase();
 
-        const itemDataName = itemData.indexOf(textData) > -1;
+        const itemDataName = itemData.indexOf(textData) > -1 
 
         return itemDataName;
       });

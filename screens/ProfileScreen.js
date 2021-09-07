@@ -261,6 +261,7 @@ export default function ProfileScreen({ navigation }) {
               title="Guardar"
               onPress={() => {
                 updateRestaurantName();
+                onRefresh()
               }}
             />
         </Card>
