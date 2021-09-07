@@ -75,7 +75,7 @@ export default function ProfileScreen({ navigation }) {
     }
   };
 
-  const updateRestaurantPImage = async () => {
+  const updateRestaurantImage = async () => {
     if (newRestaurantImage.length > 0) {
       firebase
         .firestore()
@@ -272,7 +272,7 @@ export default function ProfileScreen({ navigation }) {
             placeholder={restaurant.restaurantImage}
             value={newRestaurantImage}
             onChangeText={(newRestaurantImage) =>
-              setNewRestaurantName(newRestaurantImage)
+              setNewRestaurantImage(newRestaurantImage)
             }
             ref={newRestaurantImageInput}
             multiline
