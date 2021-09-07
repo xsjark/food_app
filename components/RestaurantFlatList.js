@@ -173,6 +173,7 @@ const RestaurantFlatList = () => {
     firebase
       .firestore()
       .collection("restaurants")
+      .where("subscribed", "==", true)
       .orderBy("restaurantName")
       .onSnapshot(
         (snapshot) => {
@@ -182,7 +183,7 @@ const RestaurantFlatList = () => {
           }));
           setRestaurants(restaurants);
         },
-        (error) => alert(error)
+        (error) => console.log(error)
       );
   }, []);
 

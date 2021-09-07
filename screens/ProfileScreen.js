@@ -398,10 +398,11 @@ export default function ProfileScreen({ navigation }) {
       
       </ScrollView>
 }
+{!restaurant.subscribed && 
 <Card containerStyle={styles.spaced}>
           <Card.Title>Suscríbase ya!</Card.Title>
           <Card.Divider />
-          <Text> Póngase en contacto con nuestro departamento comercial para pedir presupuesto y consejo.</Text>
+          <Text>Póngase en contacto con nuestro departamento comercial para pedir presupuesto y consejo.</Text>
 
           <Button
           containerStyle={{width:"90%", marginTop: 20, marginBottom: 10, marginHorizontal: "5%", borderRadius: 10, }}
@@ -417,7 +418,9 @@ export default function ProfileScreen({ navigation }) {
           raised
         />
         </Card>
+}
     </View>
+        
   );
 }
 
