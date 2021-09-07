@@ -192,6 +192,7 @@ const RestaurantFlatList = () => {
     firebase
       .firestore()
       .collection("restaurants")
+      .where("subscribed", "==", true)
       .orderBy("restaurantName")
       .onSnapshot(
         (snapshot) => {
@@ -217,7 +218,7 @@ const RestaurantFlatList = () => {
         placeholder="Alitas, Chifa, Mariscos, Vegetariana..."
         value={search}
         lightTheme
-        containerStyle={{ backgroundColor: "white" }}
+        containerStyle={{ backgroundColor: "white", width:400 }}
         inputContainerStyle={{ backgroundColor: "white" }}
       />
       <View style={styles.container}>
