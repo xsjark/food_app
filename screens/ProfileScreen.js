@@ -152,9 +152,9 @@ export default function ProfileScreen({ navigation }) {
       });
   }, [restaurant.restaurantName]);
 
+  // Returns true if input is valid time format
   const  validateHhMm = input => {
     var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(input);
-
     if (isValid) {
       return true;
     } else {
@@ -265,13 +265,16 @@ export default function ProfileScreen({ navigation }) {
             ref={newRestaurantNameInput}
           />
             <Button
-              buttonStyle={styles.button}
+              containerStyle={{width:"90%", marginTop: 20, marginBottom: 20, marginHorizontal: "5%", borderRadius: 10, }}
+              buttonStyle={{backgroundColor: "#f4d03f"}}
               titleStyle={{  color: "black" }}
+              raised
               title="Guardar"
               onPress={() => {
                 updateRestaurantName();
                 onRefresh()
               }}
+              
             />
         </Card>
         <Card containerStyle={styles.spaced}>
@@ -288,8 +291,10 @@ export default function ProfileScreen({ navigation }) {
             multiline
           />
             <Button
-              buttonStyle={styles.button}
+              containerStyle={{width:"90%", marginTop: 20, marginBottom: 20, marginHorizontal: "5%", borderRadius: 10, }}
+              buttonStyle={{backgroundColor: "#f4d03f"}}
               titleStyle={{  color: "black" }}
+              raised
               title="Guardar"
               onPress={() => {
                 updateRestaurantImage();
@@ -310,8 +315,10 @@ export default function ProfileScreen({ navigation }) {
           />
 
             <Button
-              buttonStyle={styles.button}
+              containerStyle={{width:"90%", marginTop: 20, marginBottom: 20, marginHorizontal: "5%", borderRadius: 10, }}
+              buttonStyle={{backgroundColor: "#f4d03f"}}
               titleStyle={{  color: "black" }}
+              raised
               title="Guardar"
               onPress={() => {
                 updateRestaurantPhone();
@@ -340,8 +347,10 @@ export default function ProfileScreen({ navigation }) {
           />
 
             <Button
-              buttonStyle={styles.button}
+              containerStyle={{width:"90%", marginTop: 20, marginBottom: 20, marginHorizontal: "5%", borderRadius: 10, }}
+              buttonStyle={{backgroundColor: "#f4d03f"}}
               titleStyle={{  color: "black" }}
+              raised
               title="Guardar"
               onPress={() => {
                 updateOpenTime();
@@ -389,8 +398,10 @@ export default function ProfileScreen({ navigation }) {
             onPress={() => handleOnChange("Sunday")}
           />
           <Button
-              buttonStyle={styles.button}
+              containerStyle={{width:"90%", marginTop: 20, marginBottom: 20, marginHorizontal: "5%", borderRadius: 10, }}
+              buttonStyle={{backgroundColor: "#f4d03f"}}
               titleStyle={{  color: "black" }}
+              raised
               title="Guardar"
               onPress={() => {
                 updateRestaurantDays();

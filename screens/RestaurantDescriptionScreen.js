@@ -147,8 +147,10 @@ export default function RestaurantPhoneScreen({ navigation }) {
       </View>
       }
         <Button
-              buttonStyle={styles.button}
+              containerStyle={{width:"90%", marginTop: 20, marginBottom: 20, marginHorizontal: "5%", borderRadius: 10, }}
+              buttonStyle={{backgroundColor: "#f4d03f"}}
               titleStyle={{  color: "black" }}
+              raised
               title="Guardar" 
               onPress={updateRestaurantKeyWords} 
         />

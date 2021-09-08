@@ -15,8 +15,10 @@ export default function SignoutScreen ({ navigation }) {
 
     <TouchableHighlight style={styles.spacedinput}>
     <Button
-      buttonStyle={styles.button}
-      titleStyle={{color: "black"}}
+      containerStyle={{width:"90%", marginHorizontal: "5%", borderRadius: 10, }}
+      buttonStyle={{backgroundColor: "#f4d03f"}}
+      titleStyle={{  color: "black" }}
+      raised
       title="Cerrar sesión"
       onPress={handleLogout}
     />
@@ -24,8 +26,10 @@ export default function SignoutScreen ({ navigation }) {
 
     <TouchableHighlight style={styles.spacedinput}>
     <Button
-      buttonStyle={styles.button}
-      titleStyle={{color: "black"}}
+      containerStyle={{width:"90%", marginTop: 10, marginHorizontal: "5%", borderRadius: 10, }}
+      buttonStyle={{backgroundColor: "#f4d03f"}}
+      titleStyle={{  color: "black" }}
+      raised
       title="Atrás "
       onPress={() => navigation.navigate("Home")}
     />
