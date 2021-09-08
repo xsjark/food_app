@@ -113,6 +113,7 @@ export default function ProfileScreen({ navigation }) {
 
   const updateOpenTime = async () => {
     if (newOpenTime.length !== 0 && newCloseTime.length !== 0) {
+      if (validateHhMm(newOpenTime) && validateHhMm(newCloseTime)){
       firebase
         .firestore()
         .collection("restaurants")
@@ -126,6 +127,9 @@ export default function ProfileScreen({ navigation }) {
         });
       alert("Restaurant hours" + firebase.auth().currentUser.uid + " updated");
     } else {
+      alert("Use correct format e.g. 09:00")
+    }
+  } else {
       alert("Enter your restaurant's new hours");
     }
   };
@@ -148,10 +152,15 @@ export default function ProfileScreen({ navigation }) {
       });
   }, [restaurant.restaurantName]);
 
-  const handleLogout = () => {
-    firebase.auth().signOut();
-    console.log("User " + firebase.auth().currentUser.uid + " logged out");
-  };
+  const  validateHhMm = input => {
+    var isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(input);
+
+    if (isValid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
